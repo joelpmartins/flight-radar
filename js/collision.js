@@ -70,6 +70,10 @@ function checkCollision() {
 
                 // Crie e posicione os ícones de colisão
                 createCollisionIcons();
+
+                let audio = document.getElementById('explosion');
+                audio.play();
+
                 // Voz reproduz alerta de colisão
                 speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
                 // Envia notificação sobre os aviões colididos

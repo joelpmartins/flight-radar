@@ -166,6 +166,9 @@ function updatePlanePositions() {
       planes.splice(i, 1);
       removePlaneFromDataGrid(plane.id);
 
+      let audio = document.getElementById('nosignal');
+      audio.play();
+
       speakMessage('Loss of signal from flight ' + plane.id);
 
       // Envia notificação sobre os aviões colididos
