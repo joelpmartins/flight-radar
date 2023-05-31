@@ -94,7 +94,7 @@ function createPlane() {
     
     // Aplica o estilo CSS diretamente ao tooltip
     tooltip.style.cssText = `
-      min-width: 180px;
+      min-width: 200px;
       position: absolute;
       background-color: black;
       color: white;
@@ -115,7 +115,7 @@ function createPlane() {
     radar.appendChild(tooltip);
   
     // Remove o tooltip quando o mouse sair do elemento
-    planeElement.addEventListener('mouseout', function () {
+    tooltip.addEventListener('mouseout', function () {
       radar.removeChild(tooltip);
     });
   
