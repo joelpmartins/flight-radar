@@ -4,7 +4,7 @@ var planeId = 1;
 const min_speed = 200;
 const max_speed = 1200;
 
-const companies = [
+const companies = [ // Nomes fictícios
   'ByteFly',
   'DjanGol',
   'EnumExpress',
@@ -79,10 +79,8 @@ function createPlane() {
   planeId++;
 
   // Adicione o evento 'mouseover' ao elemento do avião recém-criado
-
   planeElement.addEventListener('mouseover', function () {
-    var radar = document.getElementById('radar'); // substitua 'radar' pelo ID do elemento do radar
-  
+    var radar = document.getElementById('radar');
     // Cria o elemento do tooltip
     var tooltip = document.createElement('div');
     
@@ -139,7 +137,7 @@ function updatePlanePositions() {
     var plane = planes[i];
 
     // Calcula o deslocamento do avião com base na velocidade e na direção
-    var displacement = (plane.speed / 3600) * (1000 / 100); // Conversão de km/h para km/ms
+    var displacement = (plane.speed / 3600) * (1000 / 100);
 
     var angleRadians = (plane.direction - 90) * (Math.PI / 180);
     var offsetX = Math.cos(angleRadians) * displacement;
@@ -168,7 +166,6 @@ function updatePlanePositions() {
       planes.splice(i, 1);
       removePlaneFromDataGrid(plane.id);
 
-      // Envia notificação sobre os aviões colididos
       speakMessage('Loss of signal from flight ' + plane.id);
 
       // Envia notificação sobre os aviões colididos
@@ -178,7 +175,7 @@ function updatePlanePositions() {
       );
       i--;
     } else {
-      // Atualiza a posição do avião no DOM
+      // Atualiza a posição do avião
       var planeElement = document.getElementById('plane-' + plane.id);
       planeElement.style.left = plane.positionX + 'px';
       planeElement.style.top = plane.positionY + 'px';

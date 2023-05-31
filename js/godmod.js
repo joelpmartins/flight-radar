@@ -49,11 +49,11 @@ function reduceSpeed(plane) {
     function crashPlane(plane) {
         collisionPoints.push({ x: plane.positionX, y: plane.positionY });
         createCollisionIcons();
-        // Remova o avião do DOM
+        // Remova o avião
         var planeElement = document.getElementById('plane-' + plane.id);
         planeElement.parentNode.removeChild(planeElement);
 
-        // Remova o avião da matriz de dados
+        // Remova o avião do datagrid
         removePlaneFromDataGrid(plane.id);
     }
 }
