@@ -232,11 +232,11 @@ function updateActivePlanesCount() {
 function changeInterval() {
   var timeValueElement = document.getElementById('time-value');
   if (interval === 1000) {
-    interval = 100;
-    timeValueElement.textContent = '0.1s';
+    interval = 99999;
+    timeValueElement.textContent = 'teste';
   } else {
     interval = 1000;
-    timeValueElement.textContent = '1s';
+    timeValueElement.textContent = '1x';
   }
   setInterval(updatePlanePositions, interval);
 }
