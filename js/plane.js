@@ -1,6 +1,8 @@
 var planes = [];
 var planeId = 1;
 
+var interval = 1000;
+
 const min_speed = 200;
 const max_speed = 1200;
 
@@ -227,5 +229,17 @@ function updateActivePlanesCount() {
   passengersElement.textContent = passengersTotalCount;
 }
 
+function changeInterval() {
+  var timeValueElement = document.getElementById('time-value');
+  if (interval === 1000) {
+    interval = 100;
+    timeValueElement.textContent = '0.1s';
+  } else {
+    interval = 1000;
+    timeValueElement.textContent = '1s';
+  }
+  setInterval(updatePlanePositions, interval);
+}
+
 // Função para atualizar as posições dos aviões a cada intervalo de tempo (1 segundo)
-setInterval(updatePlanePositions, 1000);
+setInterval(updatePlanePositions, interval);
