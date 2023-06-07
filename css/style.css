@@ -78,6 +78,7 @@ button {
 }
 
 .rastreamento button{
+  background-color: rgb(210, 1, 1);
   font-size: 12px;
   width: 180px;
 }
