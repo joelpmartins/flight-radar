@@ -85,7 +85,7 @@ function checkCollision() {
                     npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
                 } else if (totalAccidents <= 4) {
                     npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
-                    npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros está desaparecido.';
+                    npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
                 } else if (totalAccidents <= 6) {
                     npTitle = 'Grande tragédia! ' + formatDate(today, 'DD-MM');
                     npText = totalAccidents + ' aviões se envolveram em acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos.';

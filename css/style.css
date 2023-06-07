@@ -285,17 +285,16 @@ button {
 }
 
 @media screen and (max-width: 600px) {
-  #container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #radar {
+  hr{
     display: none;
   }
 
+  #cfg-container,
+  #container,
+  .info-container,
   #dataGrid,
-  #notifications {
+  #notifications,
+  #radar {
     display: none;
   }
 
