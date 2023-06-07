@@ -123,18 +123,35 @@
     <hr class="rounded">
     <div id="cfg-container">
       <div class="cfg-div">
-        <h2>Quadro 1</h2>
-        <label for="campo1">Campo 1:</label>
-        <input type="text" id="campo1">
-        <label for="campo2">Campo 2:</label>
-        <input type="text" id="campo2">
+        <label>* Cadastre um voo aqui</label>
+        <div class="campo-row">
+          <input type="text" id="cd-posX" placeholder="posX">
+          <input type="text" id="cd-posY" placeholder="posY">
+        </div>
+        <div class="campo-row">
+          <input type="text" id="cd-raio" placeholder="Raio">
+          <input type="text" id="cd-angulo" placeholder="Ângulo">
+        </div>
+        <div class="campo-row">
+          <input type="text" id="cd-velocidade" placeholder="Velocidade">
+          <input type="text" id="cd-direcao" placeholder="Direção">
+        </div>
+        <button>Iniciar voo</button>
       </div>
-      <div class="cfg-div">
-        <h2>Quadro 2</h2>
-        <label for="campo3">Campo 3:</label>
-        <input type="text" id="campo3">
-        <label for="campo4">Campo 4:</label>
-        <input type="text" id="campo4">
+      <div class="cfg-div rastreamento">
+        <label>* Funções de rastreamento</label>
+        <div class="campo-row">
+          <input type="text" id="rt-dismin" placeholder="Distância mínima">
+          <button>Em rota de colisão</button>
+        </div>
+        <div class="campo-row">
+          <input type="text" id="rt-tempmin" placeholder="Tempo mínimo">
+          <button>Aviões próximos</button>
+        </div>
+        <div class="campo-row">
+          <input type="text" id="ap-dismin" placeholder="Distância mínima">
+          <button>Aviões próximos ao aeroporto</button>
+        </div>
       </div>
       <div class="cfg-div newspaper">
         <h2 id="np-title"></h2>

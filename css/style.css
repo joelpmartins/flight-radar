@@ -23,6 +23,7 @@ hr.rounded {
 #cfg-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .cfg-div {
@@ -30,8 +31,55 @@ hr.rounded {
   flex: 1;
   flex-grow: 1;
   flex-direction: column;
+  justify-content: center;
   margin: 10px;
+  max-width: 30%;
   padding: 15px;
+}
+
+.cfg-div label{
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: smaller;
+}
+
+.campo-row {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-right: 5px;
+  outline: none;
+  padding: 5px;
+}
+
+::placeholder {
+  color: rgb(192, 191, 191);
+  opacity: 1;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  background-color: green;
+  border: 0px;
+  border-radius: 5px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
+.rastreamento button{
+  font-size: 12px;
+  width: 180px;
 }
 
 .newspaper {
