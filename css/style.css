@@ -234,7 +234,7 @@ button {
 
 .angle-info:nth-child(3) {
   top: 50%;
-  left: -5%;
+  left: -6%;
   transform: translate(-50%, -50%) rotate(0deg);
 }
 
@@ -273,7 +273,7 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+} 
 
 @media screen and (max-width: 800px) {
   #dataGrid {
