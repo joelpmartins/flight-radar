@@ -74,6 +74,30 @@ function checkCollision() {
                 let audio = document.getElementById('explosion');
                 audio.play();
 
+                var npTitle = '';
+                var npText = '';
+                var today = new Date();
+                var npTitleElement = document.getElementById('np-title');
+                var npTextElement = document.getElementById('np-text');
+
+                if (totalAccidents <= 2) {
+                    npTitle = 'Breaking News ' + formatDate(today, 'DD-MM');
+                    npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
+                } else if (totalAccidents <= 4) {
+                    npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
+                    npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros está desaparecido.';
+                } else if (totalAccidents <= 6) {
+                    npTitle = 'Grande tragédia! ' + formatDate(today, 'DD-MM');
+                    npText = totalAccidents + ' aviões se envolveram em acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
+                } else {
+                    npTitle = 'Situação crítica! ' + formatDate(today, 'DD-MM');
+                    npText = 'O que está acontecendo com o espaço aéreo? ' + totalAccidents + ' aviões sofreram acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos. Medidas urgentes estão sendo tomadas.';
+                }
+
+                npTitleElement.textContent = npTitle;
+                npTextElement.textContent = npText;
+                document.querySelector('.newspaper').style.display = 'block';
+
                 // Voz reproduz alerta de colisão
                 speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
                 // Envia notificação sobre os aviões colididos

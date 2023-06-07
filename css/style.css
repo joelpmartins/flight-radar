@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@300&display=swap');
+@import url('https://fonts.cdnfonts.com/css/old-english-five');
 
 body {
   background-color: #212529;
@@ -16,6 +18,55 @@ hr.rounded {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+#cfg-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.cfg-div {
+  color: white;
+  flex: 1;
+  flex-grow: 1;
+  flex-direction: column;
+  margin: 10px;
+  padding: 15px;
+}
+
+.newspaper {
+  display: none;                             
+  position: relative;
+  padding: 18px;
+}
+
+.newspaper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/jornal.png');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+  z-index: -1;
+  box-shadow:
+    0px 4px 2px -2px rgba(0, 0, 0, 0.2) inset,
+    0px -4px 2px -2px rgba(0, 0, 0, 0.2) inset;
+}
+.newspaper h2{
+  font-family: 'Old English Five', sans-serif;       
+}
+.newspaper h2,
+.newspaper p {
+  color: rgb(26, 23, 23);
+}
+
+.newspaper p {
+  font-family: 'Changa', sans-serif;
 }
 
 #radar {
@@ -65,7 +116,7 @@ hr.rounded {
 }
 
 .info-div span {
-  font-size:x-small;
+  font-size: x-small;
   font-family: 'Roboto', sans-serif;
   color: white;
   margin-top: 5px;
