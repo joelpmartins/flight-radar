@@ -78,3 +78,13 @@ function changeDirectionToCenter() {
         planeElement.style.transform = 'rotate(' + plane.direction + 'deg)';
     }
 }
+
+function changeShouldMove(){
+    if(shouldMove === false){
+        document.querySelector('.shouldMove').style.fill = 'white';
+        shouldMove = true;
+    }else{
+        document.querySelector('.shouldMove').style.fill = 'red';
+        shouldMove = false;
+    }
+}
