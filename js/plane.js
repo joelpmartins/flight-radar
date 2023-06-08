@@ -2,6 +2,7 @@ var planes = [];
 var planeId = 1;
 
 var interval = 1000;
+var currentInterval;
 
 const min_speed = 200;
 const max_speed = 1200;
@@ -28,6 +29,8 @@ var radarRadius = Math.min(radarWidth, radarHeight) / 2;
 var totalAccidents = 0;
 var totalMissingPassengers = 0;
 
+var shouldMove = false; // Variável para controlar o movimento dos aviões
+
 function createPlane() {
   var plane = {
     id: planeId,
@@ -35,6 +38,7 @@ function createPlane() {
     positionX: Math.random() * (radarWidth - 32) + 16, // Posição X aleatória dentro do radar
     positionY: Math.random() * (radarHeight - 32) + 16, // Posição Y aleatória dentro do radar
     angle: Math.random() * 360, // Ângulo inicial aleatório
+    radius: Math.random() * (radarRadius - 16) + 16,
     speed: Math.random() * (max_speed - min_speed) + min_speed,
     direction: Math.random() * 360, // Direção aleatória em graus (0 a 359)
     passengers: 0,
@@ -69,11 +73,16 @@ function createPlane() {
 
   planeElement.style.left = plane.positionX + 'px';
   planeElement.style.top = plane.positionY + 'px';
-
   planeElement.style.transformOrigin = 'center center';
   planeElement.style.transform = 'rotate(' + plane.direction + 'deg)';
 
   radar.appendChild(planeElement);
+
+  // Calcula a distância do avião em relação ao centro do radar
+  var distanceToCenter = Math.sqrt(
+    Math.pow(plane.positionX - radarWidth / 2, 2) +
+    Math.pow(plane.positionY - radarHeight / 2, 2)
+  );
 
   addPlaneToDataGrid(plane);
   updateActivePlanesCount();
@@ -139,22 +148,25 @@ function updatePlanePositions() {
     var plane = planes[i];
 
     // Calcula o deslocamento do avião com base na velocidade e na direção
-    var displacement = (plane.speed / 3600) * (1000 / 100);
+    var displacement = (plane.speed / 3600) * (interval / 100);
 
     var angleRadians = (plane.direction - 90) * (Math.PI / 180);
     var offsetX = Math.cos(angleRadians) * displacement;
     var offsetY = Math.sin(angleRadians) * displacement;
 
-    // Atualiza a posição do avião
-    plane.positionX += offsetX;
-    plane.positionY += offsetY;
+    // Atualiza a posição do avião apenas se shouldMove for true
+    if (shouldMove) {
+      // Atualiza a posição do avião
+      plane.positionX += offsetX;
+      plane.positionY += offsetY;
 
-    // Calcula a distância percorrida
-    plane.distanceTraveled += displacement;
+      // Calcula a distância percorrida
+      plane.distanceTraveled += displacement;
 
-    // Calcula o tempo de voo
-    plane.flightTime += displacement / plane.speed;
-
+      // Calcula o tempo de voo
+      plane.flightTime += displacement / plane.speed;
+    }
+    
     // Calcula a distância do avião em relação ao centro do radar
     var distance = Math.sqrt(
       Math.pow(plane.positionX - radarWidth / 2, 2) +
@@ -182,10 +194,12 @@ function updatePlanePositions() {
     } else {
       // Atualiza a posição do avião
       var planeElement = document.getElementById('plane-' + plane.id);
-      planeElement.style.left = plane.positionX + 'px';
-      planeElement.style.top = plane.positionY + 'px';
-
-      planeElement.style.transform = 'rotate(' + plane.direction + 'deg)';
+      if (shouldMove) {
+        planeElement.style.left = plane.positionX + 'px';
+        planeElement.style.top = plane.positionY + 'px';
+    
+        planeElement.style.transform = 'rotate(' + plane.direction + 'deg)';
+      }
 
       // Atualiza os valores do avião na tabela ou adiciona uma nova linha no datagrid
       var tableRow = document.querySelector('#planeTable tbody tr:nth-child(' + (i + 1) + ')');
@@ -232,13 +246,15 @@ function updateActivePlanesCount() {
 function changeInterval() {
   var timeValueElement = document.getElementById('time-value');
   if (interval === 1000) {
-    interval = 99999;
-    timeValueElement.textContent = 'teste';
+    interval = 100;
+    timeValueElement.textContent = '1x';
+    clearInterval(currentInterval);
   } else {
     interval = 1000;
-    timeValueElement.textContent = '1x';
+    timeValueElement.textContent = '10x';
+    clearInterval(currentInterval);
   }
-  setInterval(updatePlanePositions, interval);
+  currentInterval = setInterval(updatePlanePositions, interval);
 }
 
 // Função para atualizar as posições dos aviões a cada intervalo de tempo (1 segundo)

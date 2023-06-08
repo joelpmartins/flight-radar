@@ -81,8 +81,10 @@ function checkCollision() {
                 var npTextElement = document.getElementById('np-text');
 
                 if (totalAccidents <= 2) {
+                    let plantao = document.getElementById('plantao');
                     npTitle = 'Breaking News ' + formatDate(today, 'DD-MM');
                     npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
+                    plantao.play();
                 } else if (totalAccidents <= 4) {
                     npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
                     npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
