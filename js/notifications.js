@@ -24,6 +24,5 @@ function clearNotifications() {
     var informationElement = document.getElementById('information');
     informationElement.style.overflowY = 'visible';
 
-    // Remover pontos de colisão
     removeCollisionPoints();
 }

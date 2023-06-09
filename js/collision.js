@@ -1,8 +1,6 @@
 var collisionPoints = [];
 
 function createCollisionIcons() {
-    var radar = document.getElementById('radar');
-
     for (var i = 0; i < collisionPoints.length; i++) {
         var collisionPoint = collisionPoints[i];
         var collisionId = 'collision-' + i; // ID único para cada ícone de colisão
@@ -53,66 +51,69 @@ function checkCollision() {
             // Calcula o tempo estimado para colisão
             var timeToCollision = distance / relativeSpeed;
             if (distance < collisionDistance && timeToCollision < collisionTimeThreshold) {
-                // Remove os aviões em rota de colisão
-                removePlane(planeA);
-                removePlane(planeB);
-                // Adicione os pontos de colisão à variável collisionPoints
-                collisionPoints.push({ x: planeA.positionX, y: planeA.positionY });
-                collisionPoints.push({ x: planeB.positionX, y: planeB.positionY });
-
-                totalAccidents += 2;
-                totalMissingPassengers = totalMissingPassengers + planeA.passengers + planeB.passengers;
-
-                var accidentsElement = document.querySelector('#accidents');
-                var missingPassengersElement = document.querySelector('#missing-passengers');
-                accidentsElement.textContent = totalAccidents;
-                missingPassengersElement.textContent = totalMissingPassengers;
-
-                // Crie e posicione os ícones de colisão
-                createCollisionIcons();
-
-                let audio = document.getElementById('explosion');
-                audio.play();
-
-                var npTitle = '';
-                var npText = '';
-                var today = new Date();
-                var npTitleElement = document.getElementById('np-title');
-                var npTextElement = document.getElementById('np-text');
-
-                if (totalAccidents <= 2) {
-                    let plantao = document.getElementById('plantao');
-                    npTitle = 'Breaking News ' + formatDate(today, 'DD-MM');
-                    npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
-                    plantao.play();
-                } else if (totalAccidents <= 4) {
-                    npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
-                    npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
-                } else if (totalAccidents <= 6) {
-                    npTitle = 'Grande tragédia! ' + formatDate(today, 'DD-MM');
-                    npText = totalAccidents + ' aviões se envolveram em acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
-                } else {
-                    npTitle = 'Situação crítica! ' + formatDate(today, 'DD-MM');
-                    npText = 'O que está acontecendo com o espaço aéreo? ' + totalAccidents + ' aviões sofreram acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos. Medidas urgentes estão sendo tomadas.';
-                }
-
-                npTitleElement.textContent = npTitle;
-                npTextElement.textContent = npText;
-                document.querySelector('.newspaper').style.display = 'block';
-
-                // Voz reproduz alerta de colisão
-                speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
-                // Envia notificação sobre os aviões colididos
-                sendNotification(
-                    '[' + getCurrentTime() + ']' + ' ' +
-                    'Colisão detectada: ' +
-                    'Voo ' + planeA.id + ' na posX ' + planeA.positionX.toFixed(2) + ' e posY ' + planeA.positionY.toFixed(2) +
-                    ' com o Voo ' + planeB.id + ' na posX ' + planeB.positionX.toFixed(2) + ' e posY ' + planeB.positionY.toFixed(2) + '.'
-                );
-
-                // Encerra o loop para evitar colisões duplicadas
+                collisionDetected(planeA, planeB);
                 return;
             }
         }
     }
 }
+
+function collisionDetected(planeA, planeB) {
+    // Remove os aviões em rota de colisão
+    removePlane(planeA);
+    removePlane(planeB);
+    // Adicione os pontos de colisão à variável collisionPoints
+    collisionPoints.push({ x: planeA.positionX, y: planeA.positionY });
+    collisionPoints.push({ x: planeB.positionX, y: planeB.positionY });
+
+    totalAccidents += 2;
+    totalMissingPassengers = totalMissingPassengers + planeA.passengers + planeB.passengers;
+
+    var accidentsElement = document.querySelector('#accidents');
+    var missingPassengersElement = document.querySelector('#missing-passengers');
+    accidentsElement.textContent = totalAccidents;
+    missingPassengersElement.textContent = totalMissingPassengers;
+
+    // Crie e posicione os ícones de colisão
+    createCollisionIcons();
+
+    let audio = document.getElementById('explosion');
+    audio.play();
+
+    var npTitle = '';
+    var npText = '';
+    var today = new Date();
+    var npTitleElement = document.getElementById('np-title');
+    var npTextElement = document.getElementById('np-text');
+
+    if (totalAccidents <= 2) {
+        let plantao = document.getElementById('plantao');
+        npTitle = 'Breaking News ' + formatDate(today, 'DD-MM');
+        npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
+        plantao.play();
+    } else if (totalAccidents <= 4) {
+        npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
+        npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
+    } else if (totalAccidents <= 6) {
+        npTitle = 'Grande tragédia! ' + formatDate(today, 'DD-MM');
+        npText = totalAccidents + ' aviões se envolveram em acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
+    } else {
+        npTitle = 'Situação crítica! ' + formatDate(today, 'DD-MM');
+        npText = 'O que está acontecendo com o espaço aéreo? ' + totalAccidents + ' aviões sofreram acidentes e ' + totalMissingPassengers + ' passageiros estão desaparecidos. Medidas urgentes estão sendo tomadas.';
+    }
+
+    npTitleElement.textContent = npTitle;
+    npTextElement.textContent = npText;
+    document.querySelector('.newspaper').style.display = 'block';
+
+    // Voz reproduz alerta de colisão
+    speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
+    // Envia notificação sobre os aviões colididos
+    sendNotification(
+        '[' + getCurrentTime() + ']' + ' ' +
+        'Colisão detectada: ' +
+        'Voo ' + planeA.id + ' na posX ' + planeA.positionX.toFixed(2) + ' e posY ' + planeA.positionY.toFixed(2) +
+        ' com o Voo ' + planeB.id + ' na posX ' + planeB.positionX.toFixed(2) + ' e posY ' + planeB.positionY.toFixed(2) + '.'
+    );
+}
+

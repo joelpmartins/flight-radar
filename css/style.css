@@ -117,7 +117,8 @@ button {
 .newspaper {
   display: none;                             
   position: relative;
-  padding: 18px;
+  padding: 25px;
+  margin-bottom: 0px;
 }
 
 .newspaper::before {
@@ -333,4 +334,37 @@ button {
   #warningMessage {
     display: block;
   }
+}
+
+.line {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 0;
+  border-top: 2px dashed white;
+}
+
+.line:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 1px;
+  background-color: white;
+  transform-origin: 0 0;
+  transform: scale(0.5);
+}
+
+.line:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 4px;
+  height: 1px;
+  background-color: white;
+  transform-origin: 0 0;
+  transform: scale(0.5);
 }

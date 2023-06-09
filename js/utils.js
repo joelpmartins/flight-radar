@@ -30,11 +30,15 @@ function getCurrentTime() {
     var minutos = dataAtual.getMinutes();
     var segundos = dataAtual.getSeconds();
 
-    // Formatação dos valores
     hora = hora < 10 ? "0" + hora : hora;
     minutos = minutos < 10 ? "0" + minutos : minutos;
     segundos = segundos < 10 ? "0" + segundos : segundos;
 
     var horarioFormatado = hora + ":" + minutos + ":" + segundos;
     return horarioFormatado;
+}
+
+function getRandomCompany() {
+    var randomIndex = Math.floor(Math.random() * companies.length);
+    return companies[randomIndex];
 }

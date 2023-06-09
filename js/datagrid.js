@@ -5,7 +5,7 @@ function addPlaneToDataGrid(plane) {
       <td>${plane.id}</td>
       <td>${plane.positionX.toFixed(2)}</td>
       <td>${plane.positionY.toFixed(2)}</td>
-      <td>${radarRadius.toFixed(2)}</td>
+      <td>${plane.radius.toFixed(2)}</td>
       <td>${plane.angle.toFixed(2)}</td>
       <td>${plane.speed.toFixed(2)}</td>
       <td>${plane.direction.toFixed(2)}</td>
