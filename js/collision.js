@@ -1,38 +1,31 @@
-var collisionPoints = [];
+function createCollisionIcon(x, y) {
+    var collisionId = 'collision-point-' + x + '-' + y;
 
-function createCollisionIcons() {
-    for (var i = 0; i < collisionPoints.length; i++) {
-        var collisionPoint = collisionPoints[i];
-        var collisionId = 'collision-' + i; // ID único para cada ícone de colisão
+    var icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    icon.setAttribute('width', '16');
+    icon.setAttribute('height', '16');
+    icon.setAttribute('fill', 'red');
+    icon.setAttribute('class', 'bi bi-bullseye');
+    icon.setAttribute('viewBox', '0 0 16 16');
+    icon.setAttribute('id', collisionId);
 
-        var icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        icon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-        icon.setAttribute('width', '16');
-        icon.setAttribute('height', '16');
-        icon.setAttribute('fill', 'red');
-        icon.setAttribute('class', 'bi bi-bullseye');
-        icon.setAttribute('viewBox', '0 0 16 16');
-        icon.setAttribute('id', collisionId); // Define o ID para o ícone de colisão
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z');
+    icon.appendChild(path);
 
-        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', 'M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z');
-        icon.appendChild(path);
+    var newIcon = icon.cloneNode(true);
+    newIcon.style.position = 'absolute';
+    newIcon.style.left = x + 'px';
+    newIcon.style.top = y + 'px';
 
-        var newIcon = icon.cloneNode(true);
-        newIcon.style.position = 'absolute';
-        newIcon.style.left = collisionPoint.x + 'px';
-        newIcon.style.top = collisionPoint.y + 'px';
+    radar.appendChild(newIcon);
 
-        radar.appendChild(newIcon);
-    }
+    setTimeout(function () {
+        removeCollisionIcon(collisionId);
+    }, 8000);
 }
 
-function removeCollisionPoints() {
-    var collisionIcons = document.querySelectorAll('[id^="collision-point-"]');
-    collisionIcons.forEach(function (icon) {
-        icon.parentNode.removeChild(icon);
-    });
-}
 
 function checkCollision() {
     var collisionDistance = 16; // Distância mínima para considerar uma colisão (pode ser ajustada conforme necessário)
@@ -41,14 +34,11 @@ function checkCollision() {
         var planeA = planes[i];
         for (var j = i + 1; j < planes.length; j++) {
             var planeB = planes[j];
-            // Calcula a distância entre os aviões usando a fórmula de distância entre dois pontos
             var distance = Math.sqrt(
                 Math.pow(planeA.positionX - planeB.positionX, 2) +
                 Math.pow(planeA.positionY - planeB.positionY, 2)
             );
-            // Calcula a velocidade relativa dos aviões
             var relativeSpeed = Math.abs(planeA.speed - planeB.speed);
-            // Calcula o tempo estimado para colisão
             var timeToCollision = distance / relativeSpeed;
             if (distance < collisionDistance && timeToCollision < collisionTimeThreshold) {
                 collisionDetected(planeA, planeB);
@@ -59,12 +49,11 @@ function checkCollision() {
 }
 
 function collisionDetected(planeA, planeB) {
-    // Remove os aviões em rota de colisão
     removePlane(planeA);
     removePlane(planeB);
-    // Adicione os pontos de colisão à variável collisionPoints
-    collisionPoints.push({ x: planeA.positionX, y: planeA.positionY });
-    collisionPoints.push({ x: planeB.positionX, y: planeB.positionY });
+    createCollisionIcon(planeA.positionX, planeA.positionY);
+    createCollisionIcon(planeB.positionX, planeB.positionY);
+
 
     totalAccidents += 2;
     totalMissingPassengers = totalMissingPassengers + planeA.passengers + planeB.passengers;
@@ -74,11 +63,7 @@ function collisionDetected(planeA, planeB) {
     accidentsElement.textContent = totalAccidents;
     missingPassengersElement.textContent = totalMissingPassengers;
 
-    // Crie e posicione os ícones de colisão
-    createCollisionIcons();
-
-    let audio = document.getElementById('explosion');
-    audio.play();
+    playExplosionSound();
 
     var npTitle = '';
     var npText = '';
@@ -87,10 +72,9 @@ function collisionDetected(planeA, planeB) {
     var npTextElement = document.getElementById('np-text');
 
     if (totalAccidents <= 2) {
-        let plantao = document.getElementById('plantao');
         npTitle = 'Breaking News ' + formatDate(today, 'DD-MM');
         npText = 'Hoje foi registrado um acidente entre ' + totalAccidents + ' aviões e ' + totalMissingPassengers + ' passageiros estão desaparecidos até o momento, a causa do acidente está sendo investigada.';
-        plantao.play();
+        playPlantaoSound();
     } else if (totalAccidents <= 4) {
         npTitle = 'Tragédia! ' + formatDate(today, 'DD-MM');
         npText = 'Vários acidentes ocorreram hoje, totalizando ' + totalAccidents + ' ocorrências. Um total de ' + totalMissingPassengers + ' passageiros estão desaparecidos.';
@@ -106,9 +90,7 @@ function collisionDetected(planeA, planeB) {
     npTextElement.textContent = npText;
     document.querySelector('.newspaper').style.display = 'block';
 
-    // Voz reproduz alerta de colisão
     speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
-    // Envia notificação sobre os aviões colididos
     sendNotification(
         '[' + getCurrentTime() + ']' + ' ' +
         'Colisão detectada: ' +
@@ -117,3 +99,14 @@ function collisionDetected(planeA, planeB) {
     );
 }
 
+function removeCollisionIcon(collisionId) {
+    var collisionIcon = document.getElementById(collisionId);
+    if (collisionIcon) {
+        collisionIcon.style.transition = 'opacity 1s';
+        collisionIcon.style.opacity = 0;
+
+        setTimeout(function () {
+            collisionIcon.parentNode.removeChild(collisionIcon);
+        }, 2000);
+    }
+}
