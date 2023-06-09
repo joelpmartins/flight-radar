@@ -39,19 +39,52 @@ function reduceSpeed(plane) {
             updatePlaneSpeedInDataGrid(plane.id, plane.speed.toFixed(2));
             if (plane.speed <= 140) {
                 removePlane(plane);
-                crashPlane(plane);
+                showSignalLossIcon(plane);
             }
         }
 
         if (plane.speed <= 0) {
             clearInterval(speedInterval);
             removePlane(plane);
-            crashPlane(plane);
+            showSignalLossIcon(plane);
         }
     }, 100); // Intervalo de 100ms para redução gradual
 
     function crashPlane(plane) {
 
+    }
+}
+
+function reduceSpeedAllPlanes() {
+    var speedThreshold = 140; // Velocidade mínima desejada em km/h
+
+    for (var i = 0; i < planes.length; i++) {
+        var plane = planes[i];
+
+        var speedReduction = Math.floor(Math.random() * 20) + 1; // Velocidade de redução em km/h
+
+        (function(plane) {
+            var speedInterval = setInterval(function () {
+                if (plane.speed > speedThreshold) {
+                    plane.speed -= speedReduction;
+                    updatePlaneSpeedInDataGrid(plane.id, plane.speed.toFixed(2));
+                } else {
+                    clearInterval(speedInterval);
+                    plane.speed = speedThreshold;
+                    updatePlaneSpeedInDataGrid(plane.id, plane.speed.toFixed(2));
+                    if (plane.speed <= speedThreshold) {
+                        removePlane(plane);
+                        showSignalLossIcon(plane);
+                    }
+                }
+
+                if (plane.speed <= 0) {
+                    clearInterval(speedInterval);
+                    removePlane(plane);
+                    showSignalLossIcon(plane);
+                }
+            }, 100); // Intervalo de 100ms para redução gradual
+        })(plane);
     }
 }
 
@@ -66,6 +99,11 @@ function changeDirectionToCenter() {
         var deltaX = centerX - plane.positionX;
         var deltaY = centerY - plane.positionY;
         var targetDirection = (Math.atan2(deltaY, deltaX) * 180 / Math.PI) + 90;
+
+        // Converte a direção para um valor entre 0 e 360 graus
+        if (targetDirection < 0) {
+            targetDirection += 360;
+        }
 
         // Atualiza a direção do avião
         plane.direction = targetDirection;
