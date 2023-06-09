@@ -97,10 +97,12 @@ function cursorPosition() {
         var rect = radar.getBoundingClientRect();
         var mouseX = event.clientX - rect.left;
         var mouseY = event.clientY - rect.top;
-        var raio = Math.sqrt(Math.pow(mouseX - rect.width / 2, 2) + Math.pow(mouseY - rect.height / 2, 2));
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var raio = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
 
-        posXElement.textContent = "x: " + mouseX.toFixed(1);
-        posYElement.textContent = "y: " + mouseY.toFixed(1);
+        posXElement.textContent = "x: " + (mouseX - (centerX - 185)).toFixed(1);
+        posYElement.textContent = "y: " + (mouseY - (centerY - 185)).toFixed(1);
         raioElement.textContent = "r: " + raio.toFixed(1);
     });
 }

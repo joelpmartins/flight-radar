@@ -9,6 +9,6 @@ var totalAccidents = 0; // Total de acidentes registrados
 var totalMissingPassengers = 0; // Total de passageiros desaparecidos
 
 var radar = document.getElementById('radar');
-var radarWidth = radar.offsetWidth;
-var radarHeight = radar.offsetHeight;
+var radarWidth = radar.offsetWidth - 30;
+var radarHeight = radar.offsetHeight - 30;
 var radarRadius = Math.min(radarWidth, radarHeight) / 2;

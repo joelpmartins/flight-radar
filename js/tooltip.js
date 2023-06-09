@@ -8,7 +8,7 @@ function attachTooltipToPlane(planeElement, plane) {
             'Tempo de voo: ' + formatTime(plane.flightTime) + '.' + '<br>' +
             'Distância percorrida: ' + plane.distanceTraveled.toFixed(2) + ' Km.';
 
-        tooltip.style.cssText = `min-width: 200px; position: absolute; background-color: black; color: white; padding: 8px; border-radius: 4px; font-size: 12px; margin-top: -5px;`;
+        tooltip.style.cssText = `min-width: 200px; position: absolute; background-color: black; color: white; padding: 8px; border-radius: 4px; font-size: 12px; margin-top: -5px; z-index: 9999;`;
 
         var radarRect = radar.getBoundingClientRect();
         var tooltipTop = planeElement.offsetTop - radar.offsetTop + radarRect.top;

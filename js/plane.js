@@ -225,7 +225,7 @@ function createPlaneElement(plane) {
   var planeElement = document.createElement('div');
   planeElement.className = 'plane';
   planeElement.id = 'plane-' + plane.id;
-  planeElement.style.zIndex = '9999';
+  planeElement.style.zIndex = '9998';
   if (plane.speed < 800) {
       planeElement.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-airplane-fill" viewBox="0 0 16 16">
