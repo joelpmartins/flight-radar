@@ -90,6 +90,12 @@ function cursorPosition() {
     var posXElement = document.getElementById('posX');
     var posYElement = document.getElementById('posY');
     var raioElement = document.getElementById('raio');
+    var anguloElement = document.getElementById('angulo');
+    var posXInput = document.getElementById('cd-posX');
+    var posYInput = document.getElementById('cd-posY');
+    var raioInput = document.getElementById('cd-raio');
+    var anguloInput = document.getElementById('cd-angulo');
+    var velocidadeInput = document.getElementById('cd-velocidade');
 
     document.querySelector('.cursorPos').style.fill = 'orange';
 
@@ -100,9 +106,29 @@ function cursorPosition() {
         var centerX = rect.width / 2;
         var centerY = rect.height / 2;
         var raio = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
+        var anguloRad = Math.atan2(mouseY - centerY, mouseX - centerX);
+        var anguloDeg = ((anguloRad * 180 / Math.PI + 450) % 360).toFixed(1);
 
         posXElement.textContent = "x: " + (mouseX - (centerX - 185)).toFixed(1);
         posYElement.textContent = "y: " + (mouseY - (centerY - 185)).toFixed(1);
         raioElement.textContent = "r: " + raio.toFixed(1);
+        anguloElement.textContent = "a: " + anguloDeg + "°";
+    });
+
+    radar.addEventListener('click', function (event) {
+        var rect = radar.getBoundingClientRect();
+        var mouseX = event.clientX - rect.left;
+        var mouseY = event.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var raio = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
+        var anguloRad = Math.atan2(mouseY - centerY, mouseX - centerX);
+        var anguloDeg = ((anguloRad * 180 / Math.PI + 450) % 360).toFixed(1);
+
+        posXInput.value = (mouseX - (centerX - 185)).toFixed(1);
+        posYInput.value = (mouseY - (centerY - 185)).toFixed(1);
+        raioInput.value = raio.toFixed(1);
+        anguloInput.value = anguloDeg;
+        velocidadeInput.value = (Math.random() * (max_speed - min_speed) + min_speed).toFixed(2);
     });
 }
