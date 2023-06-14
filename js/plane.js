@@ -114,7 +114,12 @@ function updatePlanePositions() {
     }
 
     var distance = calculateDistance(plane);
-
+    console.log("passou aqui 1");
+    var anguloRad = Math.atan2(plane.positionY - radarHeight / 2, plane.positionX - radarWidth / 2);
+    console.log("passou aqui 2");
+    var angle = ((anguloRad * 180 / Math.PI + 450) % 360);
+    console.log("passou aqui 3");
+    plane.angle = angle;
     if (distance > radarRadius) {
       removePlane(plane);
       handleSignalLoss(plane);
