@@ -59,7 +59,7 @@ function createRandomPlane() {
 
     attachTooltipToPlane(planeElement, plane);
 
-    planeElement.addEventListener('click', function() {
+    planeElement.addEventListener('click', function () {
       reduceSpeed(plane);
     });
 
@@ -97,7 +97,7 @@ function createCustomPlane(company, radius, positionX, positionY, angle, speed, 
 
   attachTooltipToPlane(planeElement, plane);
 
-  planeElement.addEventListener('click', function() {
+  planeElement.addEventListener('click', function () {
     reduceSpeed(plane);
   });
 
@@ -114,11 +114,8 @@ function updatePlanePositions() {
     }
 
     var distance = calculateDistance(plane);
-    console.log("passou aqui 1");
     var anguloRad = Math.atan2(plane.positionY - radarHeight / 2, plane.positionX - radarWidth / 2);
-    console.log("passou aqui 2");
     var angle = ((anguloRad * 180 / Math.PI + 450) % 360);
-    console.log("passou aqui 3");
     plane.angle = angle;
     if (distance > radarRadius) {
       removePlane(plane);
@@ -206,9 +203,9 @@ function getRandomPosition(size, radius) {
 function generatePassengersToPlane(speed) {
   var passengers;
   if (speed < 800) {
-      passengers = Math.round(Math.random() * (220 - 2) + 2);
+    passengers = Math.round(Math.random() * (220 - 2) + 2);
   } else {
-      passengers = Math.floor(Math.random() * (516 - 2) + 2);
+    passengers = Math.floor(Math.random() * (516 - 2) + 2);
   }
   return passengers += Math.floor(Math.random() * (20 - 8 + 1) + 8);
 }
@@ -221,7 +218,7 @@ function updateActivePlanesCount() {
   planesElement.textContent = activePlanesCount;
 
   for (var i = 0; i < planes.length; i++) {
-      passengersTotalCount += planes[i].passengers;
+    passengersTotalCount += planes[i].passengers;
   }
   passengersElement.textContent = passengersTotalCount;
 }
@@ -232,15 +229,21 @@ function createPlaneElement(plane) {
   planeElement.id = 'plane-' + plane.id;
   planeElement.style.zIndex = '9998';
   if (plane.speed < 800) {
-      planeElement.innerHTML = `
+    planeElement.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-airplane-fill" viewBox="0 0 16 16">
         <path d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"/>
       </svg>`;
-  } else {
-      planeElement.innerHTML = `
+  } else if (plane.speed > 799 && plane.speed < 1201) {
+    planeElement.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-airplane-engines-fill" viewBox="0 0 16 16">
         <path d="M8 0c-.787 0-1.292.592-1.572 1.151A4.347 4.347 0 0 0 6 3v3.691l-2 1V7.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.191l-1.17.585A1.5 1.5 0 0 0 0 10.618V12a.5.5 0 0 0 .582.493l1.631-.272.313.937a.5.5 0 0 0 .948 0l.405-1.214 2.21-.369.375 2.253-1.318 1.318A.5.5 0 0 0 5.5 16h5a.5.5 0 0 0 .354-.854l-1.318-1.318.375-2.253 2.21.369.405 1.214a.5.5 0 0 0 .948 0l.313-.937 1.63.272A.5.5 0 0 0 16 12v-1.382a1.5 1.5 0 0 0-.83-1.342L14 8.691V7.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v.191l-2-1V3c0-.568-.14-1.271-.428-1.849C9.292.591 8.787 0 8 0Z"/>
       </svg>`;
+  } else {
+    planeElement.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-rocket-fill" viewBox="0 0 16 16">
+    <path d="M10.175 1.991c.81 1.312 1.583 3.43 1.778 6.819l1.5 1.83A2.5 2.5 0 0 1 14 12.202V15.5a.5.5 0 0 1-.9.3l-1.125-1.5c-.166-.222-.42-.4-.752-.57-.214-.108-.414-.192-.627-.282l-.196-.083C9.7 13.793 8.85 14 8 14c-.85 0-1.7-.207-2.4-.635-.068.03-.133.057-.198.084-.211.089-.411.173-.625.281-.332.17-.586.348-.752.57L2.9 15.8a.5.5 0 0 1-.9-.3v-3.298a2.5 2.5 0 0 1 .548-1.562l.004-.005L4.049 8.81c.197-3.323.969-5.434 1.774-6.756.466-.767.94-1.262 1.31-1.57a3.67 3.67 0 0 1 .601-.41A.549.549 0 0 1 8 0c.101 0 .17.027.25.064.037.017.086.041.145.075.118.066.277.167.463.315.373.297.85.779 1.317 1.537ZM9.5 6c0-1.105-.672-2-1.5-2s-1.5.895-1.5 2S7.172 8 8 8s1.5-.895 1.5-2Z"/>
+    <path d="M8 14.5c.5 0 .999-.046 1.479-.139L8.4 15.8a.5.5 0 0 1-.8 0l-1.079-1.439c.48.093.98.139 1.479.139Z"/>
+  </svg>`;
   }
 
   planeElement.style.left = plane.positionX + 'px';
@@ -260,7 +263,7 @@ function handleSignalLoss(plane) {
   var notificationMessage =
     '[' + currentTime + '] ' +
     'Sinal perdido: ' + 'Voo ' + plane.id + ' saiu do raio do radar na posX ' + plane.positionX.toFixed(2) + ' e posY ' + plane.positionY.toFixed(2) + '.';
-  
+
   showSignalLossIcon(plane);
   playNoSignalAudio();
   sendNotification(notificationMessage);
@@ -275,7 +278,7 @@ function showSignalLossIcon(plane) {
 
   radar.appendChild(icon);
 
-  setTimeout(function() {
+  setTimeout(function () {
     radar.removeChild(icon);
   }, 8000);
 }
@@ -294,7 +297,7 @@ function createSignalLossIcon() {
   return svg;
 }
 
-startFlightButton.addEventListener('click', function() {
+startFlightButton.addEventListener('click', function () {
   var posXInput = document.querySelector('#cd-posX');
   var posYInput = document.querySelector('#cd-posY');
   var raioInput = document.querySelector('#cd-raio');
