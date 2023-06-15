@@ -1,0 +1,29 @@
+.carousel {
+  margin: 0 auto;
+}
+
+.slide {
+  flex: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s;
+}
+
+.dot-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #bbb;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: green;
+}

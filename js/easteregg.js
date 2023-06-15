@@ -8,9 +8,9 @@ function createEasterEgg() {
         angle: Math.random() * 360,
         speed: Math.random() * (5000 - 3000) + 3000,
         direction: Math.random() * 360,
-        passengers: "???",
-        flightTime: "???",
-        distanceTraveled: "???"
+        passengers: 0,
+        flightTime: 0,
+        distanceTraveled: 0
     };
 
     var isOutsideRadar = true;
@@ -35,8 +35,6 @@ function createEasterEgg() {
 
     if (isOutsideRadar) {
     } else {
-      plane.passengers = generatePassengersToPlane(plane.speed);
-  
       planes.push(plane);
   
       var planeElement = createPlaneElement(plane);

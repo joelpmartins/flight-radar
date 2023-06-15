@@ -1,3 +1,5 @@
+var selectedPlane;
+
 function addPlaneToDataGrid(plane) {
     var newRow = document.createElement('tr');
     newRow.setAttribute('data-plane-id', plane.id);
@@ -10,6 +12,10 @@ function addPlaneToDataGrid(plane) {
       <td>${plane.speed.toFixed(2)}</td>
       <td>${plane.direction.toFixed(2)}</td>
     `;
+
+    newRow.addEventListener('click', function () {
+        selectPlane(plane);
+    });
 
     document.querySelector('#planeTable tbody').appendChild(newRow);
 }
@@ -28,3 +34,13 @@ function updatePlaneSpeedInDataGrid(planeId, speed) {
         tableRow.cells[5].textContent = speed;
     }
 }
+
+function selectPlane(plane) {
+    var selectedPlaneElement = document.querySelector('#selectedPlane');
+    if(plane != -1){
+        selectedPlaneElement.textContent = `(${plane.id})`;
+    }else{
+        selectedPlaneElement.textContent = `#`;
+    }
+    selectedPlane = plane;
+  }
