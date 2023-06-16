@@ -36,6 +36,7 @@ function createEasterEgg() {
     if (isOutsideRadar) {
     } else {
       planes.push(plane);
+      speakMessage('Unidentified flying object detected, all aircraft on high alert.');
   
       var planeElement = createPlaneElement(plane);
       planeElements[plane.id] = planeElement;
