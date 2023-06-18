@@ -22,6 +22,10 @@ function createRandomPlane() {
     distanceTraveled: 0
   };
 
+  var convertedPlanePosition = convertToPolar(plane.positionX, plane.positionY);
+  plane.positionX = convertedPlanePosition.positionX;
+  plane.positionY = convertedPlanePosition.positionY;
+
   var isOutsideRadar = true;
   var attempts = 0;
   var maxAttempts = 100;
@@ -82,6 +86,8 @@ function createCustomPlane(company, radius, positionX, positionY, angle, speed, 
     distanceTraveled: 0
   };
 
+  plane.speed = checkPlaneSpeed(plane.speed);
+
   plane.passengers = generatePassengersToPlane(plane.speed);
 
   planes.push(plane);
@@ -118,9 +124,11 @@ function updatePlanePositions() {
     var angle = ((anguloRad * 180 / Math.PI + 450) % 360);
     plane.angle = angle;
     if (distance > radarRadius) {
-      removePlane(plane);
-      handleSignalLoss(plane);
-      i--;
+      if (shouldMove) {
+        removePlane(plane);
+        handleSignalLoss(plane);
+        i--;
+      }
     } else {
       updatePlaneElement(plane, planeElements[plane.id]);
       updatePlaneData(plane, i);
@@ -183,9 +191,10 @@ function updatePlaneElement(plane, element) {
 
 function updatePlaneData(plane, index) {
   var tableRow = planeTable.rows[index];
+  var cartesianPosition = convertToCartesian(plane.positionX, plane.positionY);
   if (tableRow) {
-    tableRow.cells[1].textContent = plane.positionX.toFixed(2);
-    tableRow.cells[2].textContent = plane.positionY.toFixed(2);
+    tableRow.cells[1].textContent = cartesianPosition.offsetX.toFixed(2);
+    tableRow.cells[2].textContent = cartesianPosition.offsetY.toFixed(2);
     tableRow.cells[3].textContent = calculateDistance(plane).toFixed(2);
     tableRow.cells[4].textContent = plane.angle.toFixed(2);
     tableRow.cells[5].textContent = plane.speed.toFixed(2);
@@ -261,6 +270,35 @@ function createPlaneElement(plane) {
   return planeElement;
 }
 
+function checkPlaneSpeed(speed) {
+  if (speed > max_speed) {
+    return speed = max_speed;
+  } else if (speed < min_speed) {
+    return speed = min_speed;
+  }else {
+    return speed;
+  }
+}
+
+function convertToCartesian(positionX, positionY) {
+  var centerX = radarWidth / 2;
+  var centerY = radarHeight / 2;
+
+  var offsetX = positionX - centerX;
+  var offsetY = centerY - positionY;
+
+  return { offsetX: offsetX, offsetY: offsetY };
+}
+
+function convertToPolar(offsetX, offsetY) {
+  var centerX = radarWidth / 2;
+  var centerY = radarHeight / 2;
+  var positionX = offsetX + centerX;
+  var positionY = centerY - offsetY;
+
+  return { positionX: positionX, positionY: positionY };
+}
+
 function handleSignalLoss(plane) {
   speakMessage('Loss of signal from flight ' + plane.id);
 
@@ -320,7 +358,9 @@ startFlightButton.addEventListener('click', function () {
   var posX = posXInput.value ? parseFloat(posXInput.value) : getRandomPosition(radarWidth, raio);
   var posY = posYInput.value ? parseFloat(posYInput.value) : getRandomPosition(radarHeight, raio);
 
-  createCustomPlane(getRandomCompany(), raio, posX, posY, angulo, velocidade, direcao);
+  convertedPlanePosition = convertToPolar(posX, posY);
+
+  createCustomPlane(getRandomCompany(), raio, convertedPlanePosition.positionX, convertedPlanePosition.positionY, angulo, velocidade, direcao);
 
   posXInput.value = '';
   posYInput.value = '';

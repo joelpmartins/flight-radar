@@ -134,39 +134,37 @@ function cursorPosition() {
     var raioInput = document.getElementById('cd-raio');
     var anguloInput = document.getElementById('cd-angulo');
     var velocidadeInput = document.getElementById('cd-velocidade');
-
+  
     document.querySelector('.cursorPos').style.fill = 'orange';
-
+  
     radar.addEventListener('mousemove', function (event) {
-        var rect = radar.getBoundingClientRect();
-        var mouseX = event.clientX - rect.left;
-        var mouseY = event.clientY - rect.top;
-        var centerX = rect.width / 2;
-        var centerY = rect.height / 2;
-        var raio = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
-        var anguloRad = Math.atan2(mouseY - centerY, mouseX - centerX);
-        var anguloDeg = ((anguloRad * 180 / Math.PI + 450) % 360).toFixed(1);
-
-        posXElement.textContent = "x: " + (mouseX - (centerX - 185)).toFixed(1);
-        posYElement.textContent = "y: " + (mouseY - (centerY - 185)).toFixed(1);
-        raioElement.textContent = "r: " + raio.toFixed(1);
-        anguloElement.textContent = "a: " + anguloDeg + "°";
+      var rect = radar.getBoundingClientRect();
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var mouseX = event.clientX - rect.left;
+      var mouseY = event.clientY - rect.top;
+      var offsetX = (mouseX - centerX).toFixed(1);
+      var offsetY = (mouseY - centerY).toFixed(1);
+  
+      posXElement.textContent = "x: " + offsetX;
+      posYElement.textContent = "y: " + (-offsetY);
+      raioElement.textContent = "r: " + Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)).toFixed(1);
+      anguloElement.textContent = "a: " + (((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 360) % 360).toFixed(1) + "°";
     });
-
+  
     radar.addEventListener('click', function (event) {
-        var rect = radar.getBoundingClientRect();
-        var mouseX = event.clientX - rect.left;
-        var mouseY = event.clientY - rect.top;
-        var centerX = rect.width / 2;
-        var centerY = rect.height / 2;
-        var raio = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
-        var anguloRad = Math.atan2(mouseY - centerY, mouseX - centerX);
-        var anguloDeg = ((anguloRad * 180 / Math.PI + 450) % 360).toFixed(1);
-
-        posXInput.value = (mouseX - (centerX - 185)).toFixed(1);
-        posYInput.value = (mouseY - (centerY - 185)).toFixed(1);
-        raioInput.value = raio.toFixed(1);
-        anguloInput.value = anguloDeg;
-        velocidadeInput.value = (Math.random() * (max_speed - min_speed) + min_speed).toFixed(2);
+      var rect = radar.getBoundingClientRect();
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var mouseX = event.clientX - rect.left;
+      var mouseY = event.clientY - rect.top;
+      var offsetX = (mouseX - centerX).toFixed(1);
+      var offsetY = (mouseY - centerY).toFixed(1);
+  
+      posXInput.value = offsetX;
+      posYInput.value = -offsetY;
+      raioInput.value = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)).toFixed(1);
+      anguloInput.value = (((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 90 + 360) % 360).toFixed(1);
+      velocidadeInput.value = (Math.random() * (max_speed - min_speed) + min_speed).toFixed(2);
     });
-}
+  }

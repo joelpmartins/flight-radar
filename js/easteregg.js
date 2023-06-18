@@ -13,6 +13,10 @@ function createEasterEgg() {
         distanceTraveled: 0
     };
 
+    var convertedPlanePosition = convertToPolar(plane.positionX, plane.positionY);
+    plane.positionX = convertedPlanePosition.positionX;
+    plane.positionY = convertedPlanePosition.positionY;
+
     var isOutsideRadar = true;
     var attempts = 0;
     var maxAttempts = 100;

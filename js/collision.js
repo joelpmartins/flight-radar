@@ -65,7 +65,7 @@ function collisionDetected(planeA, planeB) {
 
     playExplosionSound();
 
-    var npTitle = '';
+    /*var npTitle = '';
     var npText = '';
     var today = new Date();
     var npTitleElement = document.getElementById('np-title');
@@ -88,7 +88,7 @@ function collisionDetected(planeA, planeB) {
 
     npTitleElement.textContent = npTitle;
     npTextElement.textContent = npText;
-    document.querySelector('.newspaper').style.display = 'block';
+    document.querySelector('.newspaper').style.display = 'block';*/
 
     speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
     sendNotification(
