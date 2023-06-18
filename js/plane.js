@@ -276,7 +276,7 @@ function checkPlaneSpeed(speed) {
     return speed = max_speed;
   } else if (speed < min_speed) {
     return speed = min_speed;
-  }else {
+  } else {
     return speed;
   }
 }
@@ -309,20 +309,25 @@ function convertToPolarCoordinates(angle, direction) {
   if (convertedDirection < 0) {
     convertedDirection += 360;
   }
-  
+
   return { angle: convertedAngle, direction: convertedDirection };
 }
 
 function convertAngleDirection(angle, direction) {
-  var convertedAngle = ((angle + 90) % 360 + 360) % 360;
-  var convertedDirection = ((direction + 90) % 360 + 360) % 360;
+  var convertedAngle = ((angle - 90) % 360 + 360) % 360;
+  if (direction == 0 || direction == 180) {
+    var convertedDirection = ((direction + 90) % 360 + 360) % 360;
+  }
+  else if (direction == 90 || direction == 270) {
+    var convertedDirection = ((direction - 90) % 360 + 360) % 360;
+  }
   if (convertedAngle < 0) {
     convertedAngle += 360;
   }
   if (convertedDirection < 0) {
     convertedDirection += 360;
   }
-  
+
   return { angle: convertedAngle, direction: convertedDirection };
 }
 
