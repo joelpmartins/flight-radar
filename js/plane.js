@@ -22,9 +22,9 @@ function createRandomPlane() {
     distanceTraveled: 0
   };
 
-  var convertedPlanePosition = convertToPolar(plane.positionX, plane.positionY);
-  plane.positionX = convertedPlanePosition.positionX;
-  plane.positionY = convertedPlanePosition.positionY;
+  var convertedPlanePositions = convertToPolar(plane.positionX, plane.positionY);
+  plane.positionX = convertedPlanePositions.positionX;
+  plane.positionY = convertedPlanePositions.positionY;
 
   var isOutsideRadar = true;
   var attempts = 0;
@@ -303,9 +303,11 @@ function handleSignalLoss(plane) {
   speakMessage('Loss of signal from flight ' + plane.id);
 
   var currentTime = getCurrentTime();
+  var convertedPlanePositions = convertToCartesian(plane.positionX, plane.positionY)
+
   var notificationMessage =
     '[' + currentTime + '] ' +
-    'Sinal perdido: ' + 'Voo ' + plane.id + ' saiu do raio do radar na posX ' + plane.positionX.toFixed(2) + ' e posY ' + plane.positionY.toFixed(2) + '.';
+    'Sinal perdido: ' + 'Voo ' + plane.id + ' saiu do raio do radar na posX ' + convertedPlanePositions.offsetX.toFixed(2) + ' e posY ' + convertedPlanePositions.offsetY.toFixed(2) + '.';
 
   showSignalLossIcon(plane);
   playNoSignalAudio();
@@ -358,9 +360,9 @@ startFlightButton.addEventListener('click', function () {
   var posX = posXInput.value ? parseFloat(posXInput.value) : getRandomPosition(radarWidth, raio);
   var posY = posYInput.value ? parseFloat(posYInput.value) : getRandomPosition(radarHeight, raio);
 
-  convertedPlanePosition = convertToPolar(posX, posY);
+  var convertedPlanePositions = convertToPolar(posX, posY);
 
-  createCustomPlane(getRandomCompany(), raio, convertedPlanePosition.positionX, convertedPlanePosition.positionY, angulo, velocidade, direcao);
+  createCustomPlane(getRandomCompany(), raio, convertedPlanePositions.positionX, convertedPlanePositions.positionY, angulo, velocidade, direcao);
 
   posXInput.value = '';
   posYInput.value = '';

@@ -149,7 +149,8 @@ function cursorPosition() {
       posXElement.textContent = "x: " + offsetX;
       posYElement.textContent = "y: " + (-offsetY);
       raioElement.textContent = "r: " + Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)).toFixed(1);
-      anguloElement.textContent = "a: " + (((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 360) % 360).toFixed(1) + "°";
+      anguloElement.textContent = "a: " + ((360 - ((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 360) % 360).toFixed(1)) + "°";
+
     });
   
     radar.addEventListener('click', function (event) {
@@ -164,7 +165,7 @@ function cursorPosition() {
       posXInput.value = offsetX;
       posYInput.value = -offsetY;
       raioInput.value = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)).toFixed(1);
-      anguloInput.value = (((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 90 + 360) % 360).toFixed(1);
+      anguloInput.value = ((360 - ((Math.atan2(offsetY, offsetX) * 180 / Math.PI) + 360) % 360).toFixed(1));
       velocidadeInput.value = (Math.random() * (max_speed - min_speed) + min_speed).toFixed(2);
     });
   }

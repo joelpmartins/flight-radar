@@ -91,11 +91,15 @@ function collisionDetected(planeA, planeB) {
     document.querySelector('.newspaper').style.display = 'block';*/
 
     speakMessage('Collision recorded between Flights ' + planeA.id + ' and ' + planeB.id);
+
+    var convertedPlaneAPositions = convertToCartesian(planeA.positionX, planeA.positionY);
+    var convertedPlaneBPositions = convertToCartesian(planeB.positionX, planeB.positionY);
+
     sendNotification(
         '[' + getCurrentTime() + ']' + ' ' +
         'Colisão detectada: ' +
-        'Voo ' + planeA.id + ' na posX ' + planeA.positionX.toFixed(2) + ' e posY ' + planeA.positionY.toFixed(2) +
-        ' com o Voo ' + planeB.id + ' na posX ' + planeB.positionX.toFixed(2) + ' e posY ' + planeB.positionY.toFixed(2) + '.'
+        'Voo ' + planeA.id + ' na posX ' + convertedPlaneAPositions.offsetX.toFixed(2) + ' e posY ' + convertedPlaneAPositions.offsetY.toFixed(2) +
+        ' com o Voo ' + planeB.id + ' na posX ' + convertedPlaneBPositions.offsetX.toFixed(2) + ' e posY ' + convertedPlaneBPositions.offsetY.toFixed(2) + '.'
     );
 }
 

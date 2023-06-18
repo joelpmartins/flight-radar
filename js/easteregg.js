@@ -13,9 +13,9 @@ function createEasterEgg() {
         distanceTraveled: 0
     };
 
-    var convertedPlanePosition = convertToPolar(plane.positionX, plane.positionY);
-    plane.positionX = convertedPlanePosition.positionX;
-    plane.positionY = convertedPlanePosition.positionY;
+    var convertedPlanePositions = convertToPolar(plane.positionX, plane.positionY);
+    plane.positionX = convertedPlanePositions.positionX;
+    plane.positionY = convertedPlanePositions.positionY;
 
     var isOutsideRadar = true;
     var attempts = 0;
