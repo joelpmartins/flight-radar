@@ -192,13 +192,14 @@ function updatePlaneElement(plane, element) {
 function updatePlaneData(plane, index) {
   var tableRow = planeTable.rows[index];
   var cartesianPosition = convertToCartesian(plane.positionX, plane.positionY);
+  var convertedAD = convertToPolarCoordinates(plane.angle, plane.direction);
   if (tableRow) {
     tableRow.cells[1].textContent = cartesianPosition.offsetX.toFixed(2);
     tableRow.cells[2].textContent = cartesianPosition.offsetY.toFixed(2);
     tableRow.cells[3].textContent = calculateDistance(plane).toFixed(2);
-    tableRow.cells[4].textContent = plane.angle.toFixed(2);
+    tableRow.cells[4].textContent = convertedAD.angle.toFixed(2);
     tableRow.cells[5].textContent = plane.speed.toFixed(2);
-    tableRow.cells[6].textContent = plane.direction.toFixed(2);
+    tableRow.cells[6].textContent = convertedAD.direction.toFixed(2);
   } else {
     addPlaneToDataGrid(plane);
   }
@@ -299,6 +300,32 @@ function convertToPolar(offsetX, offsetY) {
   return { positionX: positionX, positionY: positionY };
 }
 
+function convertToPolarCoordinates(angle, direction) {
+  var convertedAngle = ((angle - 90) % 360 + 360) % 360;
+  var convertedDirection = ((direction - 90) % 360 + 360) % 360;
+  if (convertedAngle < 0) {
+    convertedAngle += 360;
+  }
+  if (convertedDirection < 0) {
+    convertedDirection += 360;
+  }
+  
+  return { angle: convertedAngle, direction: convertedDirection };
+}
+
+function convertAngleDirection(angle, direction) {
+  var convertedAngle = ((angle + 90) % 360 + 360) % 360;
+  var convertedDirection = ((direction + 90) % 360 + 360) % 360;
+  if (convertedAngle < 0) {
+    convertedAngle += 360;
+  }
+  if (convertedDirection < 0) {
+    convertedDirection += 360;
+  }
+  
+  return { angle: convertedAngle, direction: convertedDirection };
+}
+
 function handleSignalLoss(plane) {
   speakMessage('Loss of signal from flight ' + plane.id);
 
@@ -361,8 +388,9 @@ startFlightButton.addEventListener('click', function () {
   var posY = posYInput.value ? parseFloat(posYInput.value) : getRandomPosition(radarHeight, raio);
 
   var convertedPlanePositions = convertToPolar(posX, posY);
+  var convertedAD = convertAngleDirection(angulo, direcao);
 
-  createCustomPlane(getRandomCompany(), raio, convertedPlanePositions.positionX, convertedPlanePositions.positionY, angulo, velocidade, direcao);
+  createCustomPlane(getRandomCompany(), raio, convertedPlanePositions.positionX, convertedPlanePositions.positionY, convertedAD.angle, velocidade, convertedAD.direction);
 
   posXInput.value = '';
   posYInput.value = '';
