@@ -301,33 +301,8 @@ function convertToPolar(offsetX, offsetY) {
 }
 
 function convertToPolarCoordinates(angle, direction) {
-  var convertedAngle = ((angle - 90) % 360 + 360) % 360;
-  var convertedDirection = ((direction - 90) % 360 + 360) % 360;
-  if (convertedAngle < 0) {
-    convertedAngle += 360;
-  }
-  if (convertedDirection < 0) {
-    convertedDirection += 360;
-  }
-
-  return { angle: convertedAngle, direction: convertedDirection };
-}
-
-function convertAngleDirection(angle, direction) {
-  var convertedAngle = ((angle - 90) % 360 + 360) % 360;
-  if (direction == 0 || direction == 180) {
-    var convertedDirection = ((direction + 90) % 360 + 360) % 360;
-  }
-  else if (direction == 90 || direction == 270) {
-    var convertedDirection = ((direction - 90) % 360 + 360) % 360;
-  }
-  if (convertedAngle < 0) {
-    convertedAngle += 360;
-  }
-  if (convertedDirection < 0) {
-    convertedDirection += 360;
-  }
-
+  var convertedAngle = ((90 - ((angle + 360) % 360) + 360) % 360);
+  var convertedDirection = ((90 - ((direction + 360) % 360) + 360) % 360);
   return { angle: convertedAngle, direction: convertedDirection };
 }
 
@@ -393,7 +368,7 @@ startFlightButton.addEventListener('click', function () {
   var posY = posYInput.value ? parseFloat(posYInput.value) : getRandomPosition(radarHeight, raio);
 
   var convertedPlanePositions = convertToPolar(posX, posY);
-  var convertedAD = convertAngleDirection(angulo, direcao);
+  var convertedAD = convertToPolarCoordinates(angulo, direcao);
 
   createCustomPlane(getRandomCompany(), raio, convertedPlanePositions.positionX, convertedPlanePositions.positionY, convertedAD.angle, velocidade, convertedAD.direction);
 
