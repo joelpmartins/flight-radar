@@ -1,4 +1,4 @@
-var selectedPlane;
+var selectedPlanes = [];
 
 function addPlaneToDataGrid(plane) {
     var newRow = document.createElement('tr');
@@ -14,7 +14,7 @@ function addPlaneToDataGrid(plane) {
     `;
 
     newRow.addEventListener('click', function () {
-        selectPlane(plane);
+        selectPlane(plane, newRow);
     });
 
     document.querySelector('#planeTable tbody').appendChild(newRow);
@@ -35,12 +35,34 @@ function updatePlaneSpeedInDataGrid(planeId, speed) {
     }
 }
 
-function selectPlane(plane) {
+function selectPlane(plane, row) {
     var selectedPlaneElement = document.querySelector('#selectedPlane');
-    if(plane != -1){
-        selectedPlaneElement.textContent = `(${plane.id})`;
-    }else{
+    if (selectedPlanes.includes(plane)) {
+        row.classList.remove('selected');
+        selectedPlanes = selectedPlanes.filter(selected => selected !== plane);
+    } else {
+        row.classList.add('selected');
+        selectedPlanes.push(plane);
+    }
+
+    if (selectedPlanes.length > 0) {
+        selectedPlaneElement.textContent = selectedPlanes.map(selected => `(${selected.id})`).join(', ');
+    } else {
         selectedPlaneElement.textContent = `#`;
     }
-    selectedPlane = plane;
-  }
+}
+
+function updateSelectedPlaneElement() {
+    var selectedPlaneElement = document.querySelector('#selectedPlane');
+    if (selectedPlanes.length > 0) {
+        selectedPlaneElement.textContent = selectedPlanes.map(selected => `(${selected.id})`).join(', ');
+    } else {
+        selectedPlaneElement.textContent = `#`;
+    }
+}
+
+var selectedPlaneElement = document.querySelector('#selectedPlane');
+selectedPlaneElement.addEventListener('click', function() {
+  selectedPlanes = [];
+  updateSelectedPlaneElement();
+});

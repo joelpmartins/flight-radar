@@ -154,6 +154,10 @@ button {
   font-family: 'Changa', sans-serif;
 }
 
+.selected {
+  color: red;
+}
+
 #radar {
   border-radius: 50%;
   width: 400px;

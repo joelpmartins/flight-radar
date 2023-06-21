@@ -7,7 +7,7 @@ function sendNotification(message) {
     var informationTable = document.querySelector('#informations tbody');
     informationTable.insertBefore(newRow, informationTable.firstChild);
 
-    var informationElement = document.getElementById('information');
+    var informationElement = document.getElementById('informations');
     if (informationTable.offsetHeight > 400) {
         informationElement.style.overflowY = 'scroll';
     } else {

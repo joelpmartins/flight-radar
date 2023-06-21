@@ -92,3 +92,13 @@ function createSignalLossIcon() {
     svg.appendChild(path);
     return svg;
 }
+
+function calculateDistanceBetweenPlanes(plane1, plane2) {
+    var x1 = plane1.positionX;
+    var y1 = plane1.positionY;
+    var x2 = plane2.positionX;
+    var y2 = plane2.positionY;
+
+    var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    return distance;
+}

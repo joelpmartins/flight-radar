@@ -26,7 +26,6 @@ function createCollisionIcon(x, y) {
     }, 8000);
 }
 
-
 function checkCollision() {
     var collisionDistance = 16; // Distância mínima para considerar uma colisão (pode ser ajustada conforme necessário)
     var collisionTimeThreshold = 3; // Limite de tempo para considerar uma colisão (em segundos)
