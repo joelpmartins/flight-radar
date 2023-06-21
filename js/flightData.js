@@ -21,6 +21,12 @@ function calculateDisplacement(plane) {
     return { offsetX: offsetX, offsetY: offsetY };
 }
 
+function detectPosition(angle, radius) {
+    let posX = radarWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
+    let posY = radarHeight / 2 + radius * Math.sin(angle * Math.PI / 180)*-1;
+    return { posX, posY };
+}
+
 function updateActivePlanesCount() {
     var activePlanesCount = planes.length;
     var passengersTotalCount = 0;

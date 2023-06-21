@@ -203,6 +203,25 @@
           <button id="startFlightButton">Iniciar voo</button>
         </div>
         <div class="slide">
+          <label>* Funções de transformação</label>
+          <div class="campo-row">
+            <input type="text" id="tl-posX" placeholder="posX">
+            <input type="text" id="tl-posY" placeholder="posY">
+            <button onclick="translatePlane()">Translandar</button>
+          </div>
+          <div class="campo-row">
+            <input type="text" id="el-posX" placeholder="posX">
+            <input type="text" id="el-posY" placeholder="posY">
+            <button onclick="staggerPlane()">Escalonar</button>
+          </div>
+          <div class="campo-row">
+            <input type="text" id="rt-angle" placeholder="angle">
+            <input type="text" id="rt-posX" placeholder="posX">
+            <input type="text" id="rt-posY" placeholder="posY">
+            <button>Rotacionar</button>
+          </div>
+        </div>
+        <div class="slide">
           <label>* Funções de rastreamento</label>
           <div class="campo-row">
             <input type="text" id="rt-dismin" placeholder="Distância mínima">
@@ -214,37 +233,14 @@
           </div>
           <div class="campo-row">
             <input type="text" id="ap-dismin" placeholder="Distância mínima">
-            <button>Aviões próximos ao aeroporto</button>
+            <button onclick="nearbyPlanesAtAirport()">Aviões próximos ao aeroporto</button>
           </div>
-        </div>
-        <div class="slide">
-          <label>* Funções de transformação</label>
-          <div class="campo-row">
-            <input type="text" id="tl-posX" placeholder="posX">
-            <input type="text" id="tl-posY" placeholder="posY">
-            <button onclick="translatePlane()">Translandar</button>
-          </div>
-          <div class="campo-row">
-            <input type="text" id="el-posX" placeholder="posX">
-            <input type="text" id="el-posY" placeholder="posY">
-            <button>Escalonar</button>
-          </div>
-          <div class="campo-row">
-            <input type="text" id="rt-angle" placeholder="angle">
-            <input type="text" id="rt-posX" placeholder="posX">
-            <input type="text" id="rt-posY" placeholder="posY">
-            <button>Rotacionar</button>
-          </div>
-        </div>
-        <div class="slide">
-          <h1>falta implementar</h1>
         </div>
       </div>
       <div class="dot-navigation">
         <span class="dot active" onclick="changeSlide(0)"></span>
         <span class="dot" onclick="changeSlide(1)"></span>
         <span class="dot" onclick="changeSlide(2)"></span>
-        <span class="dot" onclick="changeSlide(3)"></span>
       </div>
     </div>
     <div class="cfg-div newspaper">

@@ -219,35 +219,4 @@ function createPlaneElement(plane) {
   return planeElement;
 }
 
-startFlightButton.addEventListener('click', function () {
-  var posXInput = document.querySelector('#cd-posX');
-  var posYInput = document.querySelector('#cd-posY');
-  var raioInput = document.querySelector('#cd-raio');
-  var anguloInput = document.querySelector('#cd-angulo');
-  var velocidadeInput = document.querySelector('#cd-velocidade');
-  var direcaoInput = document.querySelector('#cd-direcao');
-
-  var raio = parseFloat(raioInput.value);
-  var angulo = parseFloat(anguloInput.value);
-  var velocidade = parseFloat(velocidadeInput.value);
-  var direcao = parseFloat(direcaoInput.value);
-
-  if (isNaN(raio) || isNaN(angulo) || isNaN(velocidade) || isNaN(direcao)) return;
-
-  var posX = posXInput.value ? parseFloat(posXInput.value) : getRandomPosition(radarWidth, raio);
-  var posY = posYInput.value ? parseFloat(posYInput.value) : getRandomPosition(radarHeight, raio);
-
-  var convertedPlanePositions = convertToPolar(posX, posY);
-  var convertedAD = convertToPolarCoordinates(angulo, direcao);
-
-  createCustomPlane(getRandomCompany(), raio, convertedPlanePositions.positionX, convertedPlanePositions.positionY, convertedAD.angle, velocidade, convertedAD.direction);
-
-  posXInput.value = '';
-  posYInput.value = '';
-  raioInput.value = '';
-  anguloInput.value = '';
-  velocidadeInput.value = '';
-  direcaoInput.value = '';
-});
-
 currentInterval = setInterval(updatePlanePositions, interval);

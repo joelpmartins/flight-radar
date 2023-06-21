@@ -98,7 +98,7 @@ input[type="text"] {
 }
 
 button {
-  width: 100px;
+  width: 200px;
   height: 30px;
   background-color: green;
   border: 0px;
@@ -106,6 +106,10 @@ button {
   color: white;
   font-family: 'Roboto', sans-serif;
   font-size: small;
+}
+
+#startFlightButton{
+  width: 305px;
 }
 
 .rastreamento button{
