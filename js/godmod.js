@@ -17,17 +17,9 @@ godmod.addEventListener('click', function () {
     }
 });
 
-function updatePlaneSpeedToMax() {
-    for (var i = 0; i < planes.length; i++) {
-        var plane = planes[i];
-        plane.speed = max_speed;
-        updatePlaneSpeedInDataGrid(plane.id, plane.speed.toFixed(2));
-    }
-}
-
 function reduceSpeed(plane) {
-    var speedReduction = Math.floor(Math.random() * 20) + 1; // Velocidade de redução em km/h
-    var speedThreshold = 140; // Velocidade mínima desejada em km/h
+    var speedReduction = Math.floor(Math.random() * 20) + 1;
+    var speedThreshold = 140;
 
     var speedInterval = setInterval(function () {
         if (plane.speed > speedThreshold) {
@@ -48,20 +40,16 @@ function reduceSpeed(plane) {
             removePlane(plane);
             showSignalLossIcon(plane);
         }
-    }, 100); // Intervalo de 100ms para redução gradual
-
-    function crashPlane(plane) {
-
-    }
+    }, 100);
 }
 
 function reduceSpeedAllPlanes() {
-    var speedThreshold = 140; // Velocidade mínima desejada em km/h
+    var speedThreshold = 140;
 
     for (var i = 0; i < planes.length; i++) {
         var plane = planes[i];
 
-        var speedReduction = Math.floor(Math.random() * 20) + 1; // Velocidade de redução em km/h
+        var speedReduction = Math.floor(Math.random() * 20) + 1;
 
         (function(plane) {
             var speedInterval = setInterval(function () {
@@ -83,7 +71,7 @@ function reduceSpeedAllPlanes() {
                     removePlane(plane);
                     showSignalLossIcon(plane);
                 }
-            }, 100); // Intervalo de 100ms para redução gradual
+            }, 100);
         })(plane);
     }
 }
@@ -94,21 +82,15 @@ function changeDirectionToCenter() {
 
     for (var i = 0; i < planes.length; i++) {
         var plane = planes[i];
-
-        // Calcula a direção para o centro do radar
         var deltaX = centerX - plane.positionX;
         var deltaY = centerY - plane.positionY;
         var targetDirection = (Math.atan2(deltaY, deltaX) * 180 / Math.PI) + 90;
 
-        // Converte a direção para um valor entre 0 e 360 graus
         if (targetDirection < 0) {
             targetDirection += 360;
         }
 
-        // Atualiza a direção do avião
         plane.direction = targetDirection;
-
-        // Atualiza a rotação do elemento do avião
         var planeElement = document.getElementById('plane-' + plane.id);
         planeElement.style.transform = 'rotate(' + plane.direction + 'deg)';
     }
@@ -131,9 +113,9 @@ function cursorPosition() {
     var anguloElement = document.getElementById('angulo');
     var posXInput = document.getElementById('cd-posX');
     var posYInput = document.getElementById('cd-posY');
-    var raioInput = document.getElementById('cd-raio');
-    var anguloInput = document.getElementById('cd-angulo');
-    var velocidadeInput = document.getElementById('cd-velocidade');
+    var raioInput = document.getElementById('cd-radius');
+    var anguloInput = document.getElementById('cd-angle');
+    var velocidadeInput = document.getElementById('cd-speed');
   
     document.querySelector('.cursorPos').style.fill = 'orange';
   

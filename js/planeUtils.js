@@ -23,12 +23,6 @@ function convertToPolarCoordinates(angle, direction) {
     return { angle: convertedAngle, direction: convertedDirection };
 }
 
-function getRandomPosition(size, radius) {
-    var min = radius;
-    var max = size - radius;
-    return Math.random() * (max - min) + min;
-}
-
 function checkPlaneSpeed(speed) {
     if (speed > max_speed) {
         return speed = max_speed;

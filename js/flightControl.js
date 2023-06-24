@@ -41,25 +41,6 @@ function staggerPlane() {
     }
 }
 
-function calculatePlaneDistances() {
-    var distanceMinima = document.querySelector("#rt-dismin").value;
-
-    for (var i = 0; i < planes.length - 1; i++) {
-        var plane1 = planes[i];
-
-        for (var j = i + 1; j < planes.length; j++) {
-            var plane2 = planes[j];
-            var distance = calculateDistanceBetweenPlanes(plane1, plane2);
-
-            if (distance < distanceMinima) {
-                sendNotification(
-                    '[' + getCurrentTime() + ']' + ' ' +
-                    'Aviões próximos: ' + plane1.id + '-' + plane2.id + ' (' + distance.toFixed(2) + ' km)');
-            }
-        }
-    }
-}
-
 function rotatePlane() {
     for (var i = 0; i < selectedPlanes.length; i++) {
         var plane = selectedPlanes[i];
@@ -88,13 +69,48 @@ function rotatePlane() {
     }
 }
 
+function calculatePlaneDistances() {
+    var distanceMinima = document.querySelector("#rt-dismin").value;
+
+    for (var i = 0; i < planes.length - 1; i++) {
+        var plane1 = planes[i];
+
+        for (var j = i + 1; j < planes.length; j++) {
+            var plane2 = planes[j];
+            var distance = calculateDistanceBetweenPlanes(plane1, plane2);
+
+            if (distance < distanceMinima) {
+                clearNotifications();
+                sendNotification('[' + getCurrentTime() + ']' + ' ' + 'Aviões próximos: ' + plane1.id + '-' + plane2.id + ' (' + distance.toFixed(2) + ' km)');
+            }else{
+                clearNotifications();
+                sendNotification('[' + getCurrentTime() + ']' + ' Nenhum avião está próximo ao outro na distância de: ' + distanceMinima + ' km');
+            }
+        }
+    }
+}
+
+function nearbyPlanesAtAirport() {
+    var count = 0;
+    var planeRadius;
+    const distance = document.querySelector("#ap-dismin").value;
+    for (let i = 0; i < planes.length; i++) {
+        planeRadius = planes[i].radius;
+        if (planeRadius <= distance) {
+            count++;
+        }
+    }
+    clearNotifications();
+    sendNotification('[' + getCurrentTime() + ']' + ' ' + 'Quantidade de aviões próximo ao aeroporto: ' + count);
+}
+
 startFlightButton.addEventListener('click', function () {
     var posXInput = document.querySelector('#cd-posX');
     var posYInput = document.querySelector('#cd-posY');
-    var raioInput = document.querySelector('#cd-raio');
-    var anguloInput = document.querySelector('#cd-angulo');
-    var velocidadeInput = document.querySelector('#cd-velocidade');
-    var direcaoInput = document.querySelector('#cd-direcao');
+    var raioInput = document.querySelector('#cd-radius');
+    var anguloInput = document.querySelector('#cd-angle');
+    var velocidadeInput = document.querySelector('#cd-speed');
+    var direcaoInput = document.querySelector('#cd-direction');
 
     var raio = parseFloat(raioInput.value);
     var angulo = parseFloat(anguloInput.value);
@@ -119,26 +135,10 @@ startFlightButton.addEventListener('click', function () {
     direcaoInput.value = '';
 });
 
-function nearbyPlanesAtAirport() {
-    var count = 0;
-    var planeRadius;
-    const distance = document.querySelector("#ap-dismin").value;
-    for (let i = 0; i < planes.length; i++) {
-        planeRadius = planes[i].radius;
-        if (planeRadius <= distance) {
-            count++;
-        }
-    }
-    sendNotification(
-        '[' + getCurrentTime() + ']' + ' ' +
-        'Quantidade de aviões próximo ao aeroporto: ' + count
-    );
-}
-
 const cd_posX = document.querySelector("#cd-posX");
 const cd_posY = document.querySelector("#cd-posY");
-const cd_radius = document.querySelector("#cd-raio");
-const cd_angle = document.querySelector("#cd-angulo");
+const cd_radius = document.querySelector("#cd-radius");
+const cd_angle = document.querySelector("#cd-angle");
 
 cd_posX.addEventListener("input", function () {
     if (cd_posY.value) {

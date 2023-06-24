@@ -57,23 +57,6 @@ hr.rounded {
   justify-content: center;
 }
 
-.cfg-div {
-  color: white;
-  flex: 1;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: center;
-  margin: 10px;
-  max-width: 30%;
-  padding: 15px;
-}
-
-.cfg-div label{
-  color: white;
-  font-family: 'Roboto', sans-serif;
-  font-size: smaller;
-}
-
 .campo-row {
   display: flex;
   margin-bottom: 5px;
@@ -116,42 +99,6 @@ button {
   background-color: rgb(210, 1, 1);
   font-size: 12px;
   width: 180px;
-}
-
-.newspaper {
-  display: none;                             
-  position: relative;
-  padding: 25px;
-  margin-bottom: 0px;
-}
-
-.newspaper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../images/jornal.png');
-  background-repeat: repeat;
-  background-size: cover;
-  background-position: center;
-  clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
-  z-index: -1;
-  box-shadow:
-    0px 4px 2px -2px rgba(0, 0, 0, 0.2) inset,
-    0px -4px 2px -2px rgba(0, 0, 0, 0.2) inset;
-}
-.newspaper h2{
-  font-family: 'Old English Five', sans-serif;       
-}
-.newspaper h2,
-.newspaper p {
-  color: rgb(26, 23, 23);
-}
-
-.newspaper p {
-  font-family: 'Changa', sans-serif;
 }
 
 .selected {

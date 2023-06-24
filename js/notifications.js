@@ -21,8 +21,6 @@ function clearNotifications() {
         informationTable.removeChild(informationTable.firstChild);
     }
 
-    var informationElement = document.getElementById('information');
+    var informationElement = document.getElementById('informations');
     informationElement.style.overflowY = 'visible';
-
-    removeCollisionPoints();
 }
