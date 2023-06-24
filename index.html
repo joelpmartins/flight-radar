@@ -203,7 +203,7 @@
               <input type="text" id="rt-angle" placeholder="angle">
               <input type="text" id="rt-posX" placeholder="posX">
               <input type="text" id="rt-posY" placeholder="posY">
-              <button onclick="rotatePlane()">Rotacionar</button>
+              <button onclick="rotatePlane()" id="rt-button">Rotacionar</button>
             </div>
           </div>
           <div class="slide">
@@ -229,6 +229,7 @@
         </div>
       </div>
     </div>
+    <div id="center-rotation"></div>
     <div id="warningMessage">O Flight Radar não foi adaptado para resoluções menores que 600px de largura.</div>
     <audio id="explosion" preload="auto">
       <source src="audio/explosion.wav">

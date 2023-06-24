@@ -23,7 +23,7 @@ function calculateDisplacement(plane) {
 
 function detectPosition(angle, radius) {
     let posX = radarWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
-    let posY = radarHeight / 2 + radius * Math.sin(angle * Math.PI / 180)*-1;
+    let posY = radarHeight / 2 + radius * Math.sin(angle * Math.PI / 180) * -1;
     return { posX, posY };
 }
 
@@ -101,4 +101,13 @@ function calculateDistanceBetweenPlanes(plane1, plane2) {
 
     var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     return distance;
+}
+
+function isSelectedPlane(plane, element) {
+    var svgElement = element.querySelector('svg');
+    if (selectedPlanes.includes(plane)) {
+        svgElement.style.fill = 'red';
+    } else {
+        svgElement.style.fill = 'white';
+    }
 }

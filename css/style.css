@@ -25,6 +25,18 @@ hr.rounded {
   border-radius: 50%;
 }
 
+#center-rotation {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
 .lines-radar {
   position: absolute;
   top: 50%;

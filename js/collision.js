@@ -1,3 +1,5 @@
+var planePath = [];
+
 function createCollisionIcon(x, y) {
     var collisionId = 'collision-point-' + x + '-' + y;
 

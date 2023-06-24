@@ -55,6 +55,8 @@ function updatePlanePositions() {
       updatePlanePosition(plane, displacement);
     }
 
+    isSelectedPlane(plane, planeElements[plane.id]);
+
     var distance = calculateDistance(plane);
     var anguloRad = Math.atan2(plane.positionY - radarHeight / 2, plane.positionX - radarWidth / 2);
     var angle = ((anguloRad * 180 / Math.PI + 450) % 360);
