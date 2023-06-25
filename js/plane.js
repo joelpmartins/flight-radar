@@ -92,7 +92,7 @@ function removePlane(plane) {
   if (planeIndex > -1) {
     planes.splice(planeIndex, 1);
     removePlaneFromDataGrid(plane.id);
-
+    planePath[plane.id] = undefined;
     for (var i = 0; i < selectedPlanes.length; i++) {
       if (selectedPlanes[i].id === plane.id) {
         selectedPlanes.splice(i, 1);

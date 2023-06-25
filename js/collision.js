@@ -119,8 +119,14 @@ function checkPossibleCollision(planeA, planeB) {
 function checkCollisionAtTime() {
     for (let i = 1; i < planePath.length; i++) {
         let planeA = planePath[i];
+
+        if(planeA==undefined) continue;
+        
         for (let j = i + 1; j < planePath.length; j++) {
             let planeB = planePath[j];
+
+            if(planeB==undefined) continue;
+
             checkPossibleCollision(planeA, planeB);
 
             let startPointA = planeA.positions[0];

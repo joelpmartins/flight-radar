@@ -29,6 +29,7 @@ function planePathFinder(plane, time) {
         id:plane.id,
         positions: []
     };
+    
     if (Array.isArray(planePath[plane.id])) {
         planePath[plane.id].push(newPath);
     }else{
