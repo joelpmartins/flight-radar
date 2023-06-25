@@ -12,3 +12,6 @@ var radar = document.getElementById('radar');
 var radarWidth = radar.offsetWidth-30;
 var radarHeight = radar.offsetHeight-30;
 var radarRadius = Math.min(radarWidth, radarHeight) / 2;
+
+var minCollisionTime = 60;
+var collisionMarginError = 6;

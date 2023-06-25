@@ -89,3 +89,88 @@ function removeCollisionIcon(collisionId) {
         }, 2000);
     }
 }
+
+function checkPossibleCollision(planeA, planeB) {
+    let collisionDetected = false;
+    for (let i = 0; i < planeA.positions.length; i++) {
+        for (let j = 0; j < planeB.positions.length; j++) {
+            if (Math.abs(parseInt(planeA.positions[i].x) - parseInt(planeB.positions[j].x)) <= collisionMarginError && Math.abs(parseInt(planeA.positions[i].y) - parseInt(planeB.positions[j].y)) <= collisionMarginError) {
+                let collisionPointX = (parseInt(planeA.positions[i].x) + parseInt(planeB.positions[j].x)) / 2;
+                let collisionPointY = (parseInt(planeA.positions[i].y) + parseInt(planeB.positions[j].y)) / 2;
+
+                let collisionPoints = convertToCartesian(collisionPointX, collisionPointY);
+
+                sendNotification('[' + getCurrentTime() + '] ' +
+                    'Rota de colisão detectada: ' + 'Voo ' + planeA.id + ' e o voo ' + planeB.id +
+                    ' em rota de colisão na posX: ' + collisionPoints.offsetX + ' e posY: ' + collisionPoints.offsetY);
+
+                createCollisionIcon(collisionPointX, collisionPointY);
+
+                collisionDetected = true;
+                break;
+            }
+        }
+        if (collisionDetected) {
+            break;
+        }
+    }
+}
+
+function checkCollisionAtTime() {
+    for (let i = 1; i < planePath.length; i++) {
+        let planeA = planePath[i];
+        for (let j = i + 1; j < planePath.length; j++) {
+            let planeB = planePath[j];
+            checkPossibleCollision(planeA, planeB);
+
+            let startPointA = planeA.positions[0];
+            let endPointA = planeA.positions[planeA.positions.length - 1];
+            let startPointB = planeB.positions[0];
+            let endPointB = planeB.positions[planeB.positions.length - 1];
+
+            drawLine(startPointA.x, startPointA.y, endPointA.x, endPointA.y);
+            drawLine(startPointB.x, startPointB.y, endPointB.x, endPointB.y);
+        }
+    }
+}
+
+function checkRouteCollision(time) {
+    for (let i = 0; i < planes.length; i++) {
+        var plane = planes[i];
+        planePathFinder(plane, time);
+    }
+    checkCollisionAtTime();
+}
+
+function drawLine(x1, y1, x2, y2) {
+    let canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    canvas.style.position = 'absolute';
+    canvas.style.top = radar.offsetTop + 15 + 'px';
+    canvas.style.left = radar.offsetLeft + 15 + 'px';
+    canvas.width = radar.offsetWidth;
+    canvas.height = radar.offsetHeight;
+
+    let context = canvas.getContext('2d');
+    context.beginPath();
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
+    context.strokeStyle = 'grey';
+    context.lineWidth = 0.5;
+    context.opacity = 0.3;
+    context.setLineDash([2, 2]);
+    context.stroke();
+
+    setTimeout(function () {
+        document.body.removeChild(canvas);
+    }, 8000);
+}
+
+const btn_collisionRoute = document.getElementById("btn-collisionRoute");
+btn_collisionRoute.addEventListener("click", () => {
+    let time = parseInt(document.getElementById("rt-tempmin").value);
+    minCollisionTime = time;
+    checkRouteCollision(time);
+});
+
+

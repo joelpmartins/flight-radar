@@ -21,6 +21,33 @@ function calculateDisplacement(plane) {
     return { offsetX: offsetX, offsetY: offsetY };
 }
 
+function planePathFinder(plane, time) {
+    var displacement = (plane.speed / 3600) * (interval / 1000);
+    var angleRadians = (plane.direction - 90) * (Math.PI / 180);
+    
+    var newPath = {
+        id:plane.id,
+        positions: []
+    };
+    if (Array.isArray(planePath[plane.id])) {
+        planePath[plane.id].push(newPath);
+    }else{
+        planePath[plane.id] = newPath;
+    }
+
+    for (let i = 0; i <= time; i++) {
+        var totalDisplacement = displacement * (i * 1000 / interval);
+        var offsetX = Math.cos(angleRadians) * totalDisplacement;
+        var offsetY = Math.sin(angleRadians) * totalDisplacement;
+
+        var flightTime = ((Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2))/plane.speed)*3600);
+
+        var px = plane.positionX + offsetX;
+        var py = plane.positionY + offsetY;
+        newPath.positions.push({x:px, y:py, t:flightTime});
+    }
+}
+
 function detectPosition(angle, radius) {
     let posX = radarWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
     let posY = radarHeight / 2 + radius * Math.sin(angle * Math.PI / 180) * -1;

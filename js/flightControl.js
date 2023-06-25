@@ -104,6 +104,9 @@ startFlightButton.addEventListener('click', function () {
     var velocidadeInput = document.querySelector('#cd-speed');
     var direcaoInput = document.querySelector('#cd-direction');
 
+    const planePosition = document.getElementById('center-rotation');
+    planePosition.style.display = 'none';
+
     var raio = parseFloat(raioInput.value);
     var angulo = parseFloat(anguloInput.value);
     var velocidade = parseFloat(velocidadeInput.value);
@@ -131,6 +134,26 @@ const cd_posX = document.querySelector("#cd-posX");
 const cd_posY = document.querySelector("#cd-posY");
 const cd_radius = document.querySelector("#cd-radius");
 const cd_angle = document.querySelector("#cd-angle");
+const rt_button = document.getElementById('rt-button');
+
+startFlightButton.addEventListener('mouseover', () => {
+    let x = parseFloat(cd_posX.value);
+    let y = parseFloat(cd_posY.value);
+
+    if(!isNaN(x) && !isNaN(y)){
+        let newXY = convertToPolar(x, y);
+        const planePosition = document.getElementById('center-rotation');
+
+        planePosition.style.display = 'block';
+        planePosition.style.left = (radar.offsetLeft + 15 + newXY.positionX) + 'px';
+        planePosition.style.top = (radar.offsetTop + 15 + newXY.positionY) + 'px';
+    }
+});
+
+startFlightButton.addEventListener('mouseout', () => {
+    const planePosition = document.getElementById('center-rotation');
+    planePosition.style.display = 'none';
+});
 
 cd_posX.addEventListener("input", function () {
     if (cd_posY.value) {
@@ -173,8 +196,6 @@ cd_angle.addEventListener("input", function () {
         cd_posY.value = teste2.offsetY.toFixed(2);
     }
 });
-
-const rt_button = document.getElementById('rt-button');
 
 rt_button.addEventListener('mouseover', () => {
     let x = parseFloat(document.getElementById('rt-posX').value);

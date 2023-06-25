@@ -22,6 +22,9 @@ function createCustomPlane(company, radius, positionX, positionY, angle, speed, 
     distanceTraveled: 0
   };
 
+
+  posPlane = [];
+
   plane.speed = checkPlaneSpeed(plane.speed);
 
   plane.passengers = generatePassengersToPlane(plane.speed);
@@ -62,11 +65,9 @@ function updatePlanePositions() {
     var angle = ((anguloRad * 180 / Math.PI + 450) % 360);
     plane.angle = angle;
     if (distance > radarRadius) {
-      if (shouldMove) {
-        removePlane(plane);
-        handleSignalLoss(plane);
-        i--;
-      }
+      removePlane(plane);
+      handleSignalLoss(plane);
+      i--;
     } else {
       updatePlaneElement(plane, planeElements[plane.id]);
       updatePlaneData(plane, i);
