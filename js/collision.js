@@ -90,24 +90,34 @@ function removeCollisionIcon(collisionId) {
     }
 }
 
-function checkPossibleCollision(planeA, planeB) {
+//*******************************************************************************/
+
+function checkPossibleCollision(planeA, planeB, time) {
     let collisionDetected = false;
     for (let i = 0; i < planeA.positions.length; i++) {
         for (let j = 0; j < planeB.positions.length; j++) {
-            if (Math.abs(parseInt(planeA.positions[i].x) - parseInt(planeB.positions[j].x)) <= collisionMarginError && Math.abs(parseInt(planeA.positions[i].y) - parseInt(planeB.positions[j].y)) <= collisionMarginError) {
-                let collisionPointX = (parseInt(planeA.positions[i].x) + parseInt(planeB.positions[j].x)) / 2;
-                let collisionPointY = (parseInt(planeA.positions[i].y) + parseInt(planeB.positions[j].y)) / 2;
+            if(parseInt(planeA.positions[i].x) == parseInt(planeB.positions[j].x) && parseInt(planeA.positions[i].y) == parseInt(planeB.positions[j].y)) {
+                let differentTime = Math.abs(planeA.positions[i].t - planeB.positions[j].t);
+                if(differentTime < time){
+                    /*código experimental*/
 
-                let collisionPoints = convertToCartesian(collisionPointX, collisionPointY);
+                   
 
-                sendNotification('[' + getCurrentTime() + '] ' +
-                    'Rota de colisão detectada: ' + 'Voo ' + planeA.id + ' e o voo ' + planeB.id +
-                    ' em rota de colisão na posX: ' + collisionPoints.offsetX + ' e posY: ' + collisionPoints.offsetY);
-
-                createCollisionIcon(collisionPointX, collisionPointY);
-
-                collisionDetected = true;
-                break;
+                    /* final */
+                    let collisionPointX = (parseInt(planeA.positions[i].x) + parseInt(planeB.positions[j].x)) / 2;
+                    let collisionPointY = (parseInt(planeA.positions[i].y) + parseInt(planeB.positions[j].y)) / 2;
+    
+                    let collisionPoints = convertToCartesian(collisionPointX, collisionPointY);
+    
+                    sendNotification('[' + getCurrentTime() + '] ' +
+                        'Rota de colisão detectada: ' + 'Voo ' + planeA.id + ' (' + planeA.positions[i].t.toFixed(1) + 's)' + ' e o voo ' + planeB.id + ' (' + planeB.positions[j].t.toFixed(1) + 's)' +
+                        ' em rota de colisão na posX: ' + collisionPoints.offsetX + ' e posY: ' + collisionPoints.offsetY);
+    
+                    createCollisionIcon(collisionPointX, collisionPointY);
+    
+                    collisionDetected = true;
+                    break;
+                }
             }
         }
         if (collisionDetected) {
@@ -116,18 +126,18 @@ function checkPossibleCollision(planeA, planeB) {
     }
 }
 
-function checkCollisionAtTime() {
+function checkCollisionAtTime(time) {
     for (let i = 1; i < planePath.length; i++) {
         let planeA = planePath[i];
 
         if(planeA==undefined) continue;
-        
+
         for (let j = i + 1; j < planePath.length; j++) {
             let planeB = planePath[j];
 
             if(planeB==undefined) continue;
 
-            checkPossibleCollision(planeA, planeB);
+            checkPossibleCollision(planeA, planeB, time);
 
             let startPointA = planeA.positions[0];
             let endPointA = planeA.positions[planeA.positions.length - 1];
@@ -143,9 +153,9 @@ function checkCollisionAtTime() {
 function checkRouteCollision(time) {
     for (let i = 0; i < planes.length; i++) {
         var plane = planes[i];
-        planePathFinder(plane, time);
+        planePathFinder(plane, 4000);
     }
-    checkCollisionAtTime();
+    checkCollisionAtTime(time);
 }
 
 function drawLine(x1, y1, x2, y2) {

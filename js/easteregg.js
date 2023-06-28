@@ -60,3 +60,43 @@ function createEasterEgg() {
       planeId++;
     }
 }
+
+
+
+
+
+function aumentar() {
+  changePlaneSize(1.2); // Aumenta o tamanho em 20% (fator de escala 1.2)
+}
+
+function diminuir() {
+  changePlaneSize(0.8); // Diminui o tamanho em 20% (fator de escala 0.8)
+}
+
+function changePlaneSize(scaleFactor) {
+    for (var i = 0; i < planes.length; i++) {
+      var plane = planes[i];
+      var planeElement = planeElements[plane.id];
+  
+      var currentWidth = planeElement.offsetWidth;
+      var currentHeight = planeElement.offsetHeight;
+  
+      var newWidth = currentWidth * scaleFactor;
+      var newHeight = currentHeight * scaleFactor;
+  
+      var widthDiff = newWidth - currentWidth;
+      var heightDiff = newHeight - currentHeight;
+  
+      var leftOffset = -widthDiff / 2;
+      var topOffset = -heightDiff / 2;
+  
+      var currentLeft = parseFloat(planeElement.style.left);
+      var currentTop = parseFloat(planeElement.style.top);
+  
+      planeElement.style.width = newWidth + 'px';
+      planeElement.style.height = newHeight + 'px';
+      planeElement.style.left = (currentLeft + leftOffset) + 'px';
+      planeElement.style.top = (currentTop + topOffset) + 'px';
+    }
+  }
+  
