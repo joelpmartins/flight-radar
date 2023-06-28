@@ -90,8 +90,6 @@ function removeCollisionIcon(collisionId) {
     }
 }
 
-//*******************************************************************************/
-
 function checkPossibleCollision(planeA, planeB, time) {
     let collisionDetected = false;
     for (let i = 0; i < planeA.positions.length; i++) {

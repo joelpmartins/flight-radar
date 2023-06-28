@@ -74,29 +74,34 @@ function diminuir() {
 }
 
 function changePlaneSize(scaleFactor) {
-    for (var i = 0; i < planes.length; i++) {
-      var plane = planes[i];
-      var planeElement = planeElements[plane.id];
-  
-      var currentWidth = planeElement.offsetWidth;
-      var currentHeight = planeElement.offsetHeight;
-  
-      var newWidth = currentWidth * scaleFactor;
-      var newHeight = currentHeight * scaleFactor;
-  
-      var widthDiff = newWidth - currentWidth;
-      var heightDiff = newHeight - currentHeight;
-  
-      var leftOffset = -widthDiff / 2;
-      var topOffset = -heightDiff / 2;
-  
-      var currentLeft = parseFloat(planeElement.style.left);
-      var currentTop = parseFloat(planeElement.style.top);
-  
-      planeElement.style.width = newWidth + 'px';
-      planeElement.style.height = newHeight + 'px';
-      planeElement.style.left = (currentLeft + leftOffset) + 'px';
-      planeElement.style.top = (currentTop + topOffset) + 'px';
-    }
+  for (var i = 0; i < planes.length; i++) {
+    var plane = planes[i];
+    var planeElement = planeElements[plane.id];
+
+    var currentWidth = planeElement.offsetWidth;
+    var currentHeight = planeElement.offsetHeight;
+
+    var newWidth = currentWidth * scaleFactor;
+    var newHeight = currentHeight * scaleFactor;
+
+    var widthDiff = newWidth - currentWidth;
+    var heightDiff = newHeight - currentHeight;
+
+    var currentLeft = parseFloat(planeElement.style.left);
+    var currentTop = parseFloat(planeElement.style.top);
+
+    var centerX = currentLeft + currentWidth / 2;
+    var centerY = currentTop + currentHeight / 2;
+
+    planeElement.style.width = newWidth + 'px';
+    planeElement.style.height = newHeight + 'px';
+
+    var newLeft = centerX - newWidth / 2;
+    var newTop = centerY - newHeight / 2;
+
+    planeElement.style.left = newLeft + 'px';
+    planeElement.style.top = newTop + 'px';
   }
-  
+}
+
+
