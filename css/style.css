@@ -134,7 +134,7 @@ button {
 .plane {
   width: 16px;
   height: 16px;
-  background-color: red;
+  background-color: transparent;
   border-radius: 50%;
   display: flex;
   position: absolute;

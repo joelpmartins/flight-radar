@@ -99,11 +99,6 @@ function checkPossibleCollision(planeA, planeB, time) {
             if(parseInt(planeA.positions[i].x) == parseInt(planeB.positions[j].x) && parseInt(planeA.positions[i].y) == parseInt(planeB.positions[j].y)) {
                 let differentTime = Math.abs(planeA.positions[i].t - planeB.positions[j].t);
                 if(differentTime < time){
-                    /*código experimental*/
-
-                   
-
-                    /* final */
                     let collisionPointX = (parseInt(planeA.positions[i].x) + parseInt(planeB.positions[j].x)) / 2;
                     let collisionPointY = (parseInt(planeA.positions[i].y) + parseInt(planeB.positions[j].y)) / 2;
     
@@ -111,7 +106,7 @@ function checkPossibleCollision(planeA, planeB, time) {
     
                     sendNotification('[' + getCurrentTime() + '] ' +
                         'Rota de colisão detectada: ' + 'Voo ' + planeA.id + ' (' + planeA.positions[i].t.toFixed(1) + 's)' + ' e o voo ' + planeB.id + ' (' + planeB.positions[j].t.toFixed(1) + 's)' +
-                        ' em rota de colisão na posX: ' + collisionPoints.offsetX + ' e posY: ' + collisionPoints.offsetY);
+                        ' em rota de colisão na posX: ' + collisionPoints.offsetX + ' e posY: ' + collisionPoints.offsetY + ", diferença de tempo de chegada:" + differentTime.toFixed(1) + "s");
     
                     createCollisionIcon(collisionPointX, collisionPointY);
     

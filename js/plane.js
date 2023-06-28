@@ -56,7 +56,7 @@ function updatePlanePositions() {
 
     if (shouldMove) {
       updatePlanePosition(plane, displacement);
-      checkCollision();
+      //checkCollision();
     }
 
     isSelectedPlane(plane, planeElements[plane.id]);
