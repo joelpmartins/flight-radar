@@ -72,10 +72,8 @@ function calculatePlaneDistances() {
             var distance = calculateDistanceBetweenPlanes(plane1, plane2);
 
             if (distance < distanceMinima) {
-                clearNotifications();
                 sendNotification('[' + getCurrentTime() + ']' + ' ' + 'Aviões próximos: ' + plane1.id + '-' + plane2.id + ' (' + distance.toFixed(2) + ' km)');
             }else{
-                clearNotifications();
                 sendNotification('[' + getCurrentTime() + ']' + ' Nenhum avião está próximo ao outro na distância de: ' + distanceMinima + ' km');
             }
         }
